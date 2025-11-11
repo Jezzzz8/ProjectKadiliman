@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://s2o6qjetosur"]
+
+[ext_resource type="Script" uid="uid://cbvhf8a8h8n1w" path="res://Scripts/World/Maps/map.gd" id="1_q1b06"]
+[ext_resource type="PackedScene" uid="uid://c50dntq6c8270" path="res://Scenes/Characters/Player/PlayableCharacter.tscn" id="2_r1dl3"]
+[ext_resource type="PackedScene" uid="uid://hdwgex378b5p" path="res://Scenes/Systems/Inventory/Inventory.tscn" id="3_r1dl3"]
+[ext_resource type="Script" uid="uid://bm051cmu4slf6" path="res://Scripts/UI/HUD/UserInterface.gd" id="3_uupj0"]
+[ext_resource type="PackedScene" uid="uid://omwijs4bo70u" path="res://Scenes/World/Environment/Item/Drop/ItemDrop.tscn" id="5_72yyg"]
+
+[sub_resource type="TileSet" id="TileSet_72yyg"]
+
+[node name="Map" type="Node2D"]
+scale = Vector2(1.00752, 1.01083)
+script = ExtResource("1_q1b06")
+
+[node name="PlayableCharacter" parent="." instance=ExtResource("2_r1dl3")]
+position = Vector2(444.656, 308.657)
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+script = ExtResource("3_uupj0")
+
+[node name="Inventory" parent="UserInterface" instance=ExtResource("3_r1dl3")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+scale = Vector2(1.00752, 1.01083)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(444.656, 308.657)
+scale = Vector2(3.05297, 3.04027)
+zoom = Vector2(1.5, 1.5)
+
+[node name="ItemDrop" parent="." instance=ExtResource("5_72yyg")]
+position = Vector2(444.656, 237.429)
+
+[node name="ItemDrop2" parent="." instance=ExtResource("5_72yyg")]
+position = Vector2(349.373, 229.514)
+
+[node name="ItemDrop3" parent="." instance=ExtResource("5_72yyg")]
+position = Vector2(531.999, 229.514)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_72yyg")
+format = 2

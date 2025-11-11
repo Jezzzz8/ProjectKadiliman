@@ -1,0 +1,58 @@
+{
+	"Shovel": {
+		"ItemCategory": "Tool",
+		"StackSize": 1
+	},
+	"Slingshot": {
+		"ItemCategory": "Range_Weapon",
+		"StackSize": 1
+	},
+	"Watering Can": {
+		"ItemCategory": "Tool",
+		"StackSize": 1
+	},
+	"Peeble": {
+		"ItemCategory": "Ammo",
+		"StackSize": 99
+	},
+	"Hoe": {
+		"ItemCategory": "Tool",
+		"StackSize": 1
+	},
+	"Cross Bow": {
+		"ItemCategory": "Range_Weapon",
+		"StackSize": 1
+	},
+	"Black Shirt": {
+		"ItemCategory": "Body",
+		"StackSize": 1
+	},
+	"Blue Shirt": {
+		"ItemCategory": "Body",
+		"StackSize": 1
+	},
+	"Brown Shirt": {
+		"ItemCategory": "Body",
+		"StackSize": 1
+	},
+	"Green Shirt": {
+		"ItemCategory": "Body",
+		"StackSize": 1
+	},
+	"Orange Shirt": {
+		"ItemCategory": "Body",
+		"StackSize": 1
+	},
+	"Purple Shirt": {
+		"ItemCategory": "Body",
+		"StackSize": 1
+	},
+	"Red Shirt": {
+		"ItemCategory": "Body",
+		"StackSize": 1
+	},
+	"Yellow Shirt": {
+		"ItemCategory": "Body",
+		"StackSize": 1
+	},
+}

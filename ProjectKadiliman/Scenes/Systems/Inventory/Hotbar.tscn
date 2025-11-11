@@ -1,0 +1,124 @@
+[gd_scene load_steps=7 format=3 uid="uid://bx22uqagqed5p"]
+
+[ext_resource type="Script" uid="uid://bbu0w8d6dcwys" path="res://Scripts/UI/Inventory/Hotbar/Hotbar.gd" id="1_fynqo"]
+[ext_resource type="Texture2D" uid="uid://bpqee4oo54h8t" path="res://Assets/Environment/UI/Inventory/Background/Hotbar.png" id="1_xeqcx"]
+[ext_resource type="Texture2D" uid="uid://boefrcvuafu57" path="res://Assets/Environment/UI/Inventory/Background/Inventory_Slot_Empty.png" id="3_fynqo"]
+[ext_resource type="Script" uid="uid://chkrs746ws27f" path="res://Scripts/UI/Inventory/Slots/Slot.gd" id="3_yffjd"]
+[ext_resource type="FontFile" uid="uid://25ygueolh1n1" path="res://Assets/Environment/UI/Fonts/PixelOperator8.ttf" id="5_kiwul"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yffjd"]
+texture = ExtResource("3_fynqo")
+
+[node name="Hotbar" type="Control" groups=["hotbar"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_fynqo")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -304.0
+offset_right = 305.0
+offset_bottom = 96.0
+grow_horizontal = 2
+texture = ExtResource("1_xeqcx")
+
+[node name="HotbarSlots" type="GridContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = -14.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/h_separation = -3
+columns = 10
+
+[node name="HotbarSlot1" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot2" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot3" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot4" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot5" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot6" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot7" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot8" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot9" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="HotbarSlot10" type="Panel" parent="TextureRect/HotbarSlots"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yffjd")
+script = ExtResource("3_yffjd")
+
+[node name="ActiveItemLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 96.0
+offset_right = 69.0
+offset_bottom = 119.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("5_kiwul")
+text = "SampleText"

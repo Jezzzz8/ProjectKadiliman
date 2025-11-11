@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://r611yo6w2duw"]
+
+[ext_resource type="Script" uid="uid://hp21foc7lqen" path="res://Scripts/UI/Inventory/Items/Item.gd" id="1_xyc7y"]
+[ext_resource type="Texture2D" uid="uid://sis1n0dcpqh1" path="res://Assets/Environment/Items/Shovel.png" id="2_l1j1r"]
+[ext_resource type="FontFile" uid="uid://25ygueolh1n1" path="res://Assets/Environment/UI/Fonts/PixelOperator8.ttf" id="3_l1j1r"]
+
+[node name="Item" type="Control"]
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_xyc7y")
+
+[node name="ItemTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_right = 62.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_l1j1r")
+stretch_mode = 3
+
+[node name="Quantity" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 32.0
+offset_right = 56.0
+offset_bottom = 55.0
+theme_override_fonts/font = ExtResource("3_l1j1r")
+text = "999"
+horizontal_alignment = 2
+vertical_alignment = 1

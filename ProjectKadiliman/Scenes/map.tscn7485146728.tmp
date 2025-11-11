@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://s2o6qjetosur"]
+
+[ext_resource type="Script" uid="uid://cbvhf8a8h8n1w" path="res://Scripts/map.gd" id="1_26yhd"]
+
+[node name="Map" type="Node2D"]
+scale = Vector2(1.00752, 1.01083)
+script = ExtResource("1_26yhd")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 328)
+scale = Vector2(3.05297, 3.04027)
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(444.656, 253.257)
