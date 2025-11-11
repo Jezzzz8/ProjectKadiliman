@@ -23,6 +23,7 @@ CharacterBase="*res://Scripts/Characters/Base/CharacterBase.gd"
 CharacterUtils="*res://Scripts/Data/CharacterUtils.gd"
 JsonData="*res://Data/JSON/JSONData.gd"
 PlayerInventory="*res://Scripts/Core/Singletons/PlayerInventory.gd"
+GameManager="*res://Scripts/Core/Singletons/GameManager.gd"
 
 [display]
 
@@ -57,22 +58,7 @@ run={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
-change_tool={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":51,"key_label":0,"unicode":51,"location":0,"echo":false,"script":null)
-]
-}
-change_weapon={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":49,"key_label":0,"unicode":49,"location":0,"echo":false,"script":null)
-]
-}
-change_range_weapon={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":50,"key_label":0,"unicode":50,"location":0,"echo":false,"script":null)
-]
-}
-use_tool={
+use_item={
 "deadzone": 0.2,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(54, 8),"global_position":Vector2(61, 45),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
@@ -153,6 +139,9 @@ hotbar_0={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Item"
 2d_physics/layer_3="World"
+2d_physics/layer_4="npc"
+2d_physics/layer_5="projectiles"
+2d_physics/layer_6="enemy"
 
 [rendering]
 

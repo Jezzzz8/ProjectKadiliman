@@ -1,18 +1,23 @@
 [gd_scene load_steps=4 format=3 uid="uid://efksb7x2dvb0"]
 
 [ext_resource type="Script" uid="uid://d187p1ueut8pf" path="res://Scripts/Characters/Projectiles/PeebleAmmo.gd" id="1_7ugf6"]
-[ext_resource type="Texture2D" uid="uid://cirfgqpdyuydl" path="res://Assets/Characters/Player/Ammo/peeble.png" id="2_4gx56"]
+[ext_resource type="Texture2D" uid="uid://bpoadgh62rfq" path="res://Assets/Environment/Items/Peeble.png" id="2_7ugf6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7vj04"]
-radius = 14.0357
+radius = 7.0
 
-[node name="PeebleAmmo" type="CharacterBody2D"]
+[node name="PeebleAmmo" type="Area2D"]
+collision_layer = 16
+collision_mask = 32
 script = ExtResource("1_7ugf6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 1)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_4gx56")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_7ugf6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7vj04")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

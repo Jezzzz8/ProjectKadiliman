@@ -11,12 +11,8 @@ const NUM_HOTBAR_SLOTS = 10
 var active_item_slot = -1
 
 var inventory = {
-	0: ["Hoe", 1],
-	1: ["Shovel", 1],
-	2: ["Cross Bow", 1],
-	3: ["Watering Can", 1],
-	4: ["Slingshot", 1],
-	5: ["Peeble", 99]
+	0: ["Peeble", 50],
+	1: ["Arrow", 50],
 }
 
 var hotbar = {
@@ -24,7 +20,8 @@ var hotbar = {
 	1: ["Hoe", 1],
 	2: ["Shovel", 1],
 	3: ["Slingshot", 1],
-	5: ["Peeble", 99],
+	4: ["Cross Bow", 1],
+
 }
 
 var equips = {
@@ -71,24 +68,43 @@ func update_slot_visual(slot_index, item_name, new_quantity):
 	else:
 		slot.initialize_item(item_name, new_quantity)
 
-func remove_item(slot: SlotClass):
-	match slot.slot_type:  # FIX: Changed from slot.SlotType to slot.slot_type
+# In PlayerInventory.gd
+func remove_item(slot: SlotClass) -> bool:
+	var slot_index = slot.slot_index
+	var slot_type = slot.slot_type
+	var existed = false
+	
+	match slot_type:
 		SlotClass.SlotType.HOTBAR:
-			hotbar.erase(slot.slot_index)
+			existed = hotbar.has(slot_index)
+			hotbar.erase(slot_index)
 		SlotClass.SlotType.INVENTORY:
-			inventory.erase(slot.slot_index)
+			existed = inventory.has(slot_index)
+			inventory.erase(slot_index)
 		_:
-			equips.erase(slot.slot_index)
+			existed = equips.has(slot_index)
+			equips.erase(slot_index)
+	
+	return existed
 
-func add_item_to_empty_slot(item: ItemClass, slot: SlotClass):
-	match slot.slot_type:  # FIX: Changed from slot.SlotType to slot.slot_type
+func add_item_to_empty_slot(item: ItemClass, slot: SlotClass) -> bool:
+	var slot_index = slot.slot_index
+	var slot_type = slot.slot_type
+	
+	match slot_type:
 		SlotClass.SlotType.HOTBAR:
-			hotbar[slot.slot_index] = [item.item_name, item.item_quantity]
-			hotbar_updated.emit()
+			if not hotbar.has(slot_index):
+				hotbar[slot_index] = [item.item_name, item.item_quantity]
+				return true
 		SlotClass.SlotType.INVENTORY:
-			inventory[slot.slot_index] = [item.item_name, item.item_quantity]
+			if not inventory.has(slot_index):
+				inventory[slot_index] = [item.item_name, item.item_quantity]
+				return true
 		_:
-			equips[slot.slot_index] = [item.item_name, item.item_quantity]
+			if not equips.has(slot_index):
+				equips[slot_index] = [item.item_name, item.item_quantity]
+				return true
+	return false
 
 func add_item_quantity(slot: SlotClass, quantity_to_add: int):
 	match slot.slot_type:  # FIX: Changed from slot.SlotType to slot.slot_type and removed is_hotbar parameter

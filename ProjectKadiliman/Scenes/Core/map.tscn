@@ -18,15 +18,13 @@ scale = Vector2(3.05297, 3.04027)
 
 [node name="ItemDrop" parent="." instance=ExtResource("5_72yyg")]
 position = Vector2(444.656, 237.429)
-item_quanity = 99
 
 [node name="ItemDrop2" parent="." instance=ExtResource("5_72yyg")]
 position = Vector2(317.612, 213.686)
-item_name = "Watering Can"
+item_name = "Arrow"
 
 [node name="ItemDrop3" parent="." instance=ExtResource("5_72yyg")]
 position = Vector2(603.462, 197.857)
-item_quanity = 98
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_72yyg")

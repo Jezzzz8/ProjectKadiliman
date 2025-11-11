@@ -22,6 +22,7 @@ enum SlotType {
 }
 
 var slot_type = null
+var is_selected = false  # Track selection state
 
 
 func _ready() -> void:
@@ -39,20 +40,21 @@ func _ready() -> void:
 	refresh_style()
 		
 func refresh_style():
-	print("Refreshing slot ", slot_index, " - active slot: ", PlayerInventory.active_item_slot, " - slot type: ", slot_type)
-	
-	if slot_type == SlotType.HOTBAR and PlayerInventory.active_item_slot == slot_index:
-		print("This is the active hotbar slot - applying selected style")
+	if is_selected:
+		set('theme_override_styles/panel', selected_style)
+	elif slot_type == SlotType.HOTBAR and PlayerInventory.active_item_slot == slot_index:
 		set('theme_override_styles/panel', selected_style)
 	elif item == null:
 		set('theme_override_styles/panel', empty_style)
 	else:
 		set('theme_override_styles/panel', default_style)
 
+func set_selected(selected: bool):
+	is_selected = selected
+	refresh_style()
+
 func pickFromSlot():
 	if item != null:
-		# NEW: Set original slot information before picking up
-		item.set_original_slot(self, slot_type, slot_index)
 		remove_child(item)
 		find_parent("UserInterface").add_child(item)
 		item = null
@@ -63,8 +65,6 @@ func putIntoSlot(new_item):
 	item.position = Vector2(0, 0)
 	find_parent("UserInterface").remove_child(item)
 	add_child(item)
-	# NEW: Clear original slot when placing in a new slot
-	item.clear_original_slot()
 	refresh_style()
 	
 func initialize_item(item_name, item_quantity):

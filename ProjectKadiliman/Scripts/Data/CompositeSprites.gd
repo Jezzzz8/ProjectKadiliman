@@ -7,10 +7,11 @@ var items = {
 	"Hoe": preload("res://Assets/Environment/Items/Hoe.png"),
 	"Cross Bow": preload("res://Assets/Environment/Items/Cross Bow.png"),
 	"Watering Can": preload("res://Assets/Environment/Items/Watering Can.png"),
+	"Arrow": preload("res://Assets/Environment/Items/Arrow.png"),
 }
 
 # Tools/Equipment
-var tools = {
+var tools_sprite = {
 	"none": null,
 	
 	"Hoe": preload("res://Assets/Characters/Player/MainHand/hoe_universal.png"),
@@ -18,15 +19,15 @@ var tools = {
 	"Watering Can": preload("res://Assets/Characters/Player/MainHand/watering_can_universal.png"),
 }
 
-var weapons = {
+var weapons_sprite = {
 	"None": null,
 	
 }
 
-var range_weapons = {
+var range_weapons_sprite = {
 	"None": null,
-	
-	"Slingshot": preload("res://Assets/Characters/Player/MainHand/slingshot_universal.png")
+	"Cross Bow": preload("res://Assets/Characters/Player/MainHand/crossbow_universal.png"),
+	"Slingshot": preload("res://Assets/Characters/Player/MainHand/slingshot_universal.png"),
 }
 
 # Male spritesheets
@@ -35,7 +36,7 @@ var male_body_spritesheet = {
 	1 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Body/2_universal.png"),
 	2 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Body/3_universal.png"),
 	3 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Body/4_universal.png"),
-	4 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Body/5_universal.png")
+	4 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Body/5_universal.png"),
 }
 
 var male_hair_spritesheet = {
@@ -46,7 +47,7 @@ var male_hair_spritesheet = {
 	4 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Hair/5_universal.png"),
 	5 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Hair/6_universal.png"),
 	6 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Hair/7_universal.png"),
-	7 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Hair/8_universal.png")
+	7 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Hair/8_universal.png"),
 }
 
 var male_pants_spritesheet = {
@@ -57,7 +58,7 @@ var male_pants_spritesheet = {
 	4 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Pants/5_universal.png"),
 	5 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Pants/6_universal.png"),
 	6 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Pants/7_universal.png"),
-	7 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Pants/8_universal.png")
+	7 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Pants/8_universal.png"),
 }
 
 var male_shirts_spritesheet = {
@@ -68,7 +69,7 @@ var male_shirts_spritesheet = {
 	4 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shirts/5_universal.png"),
 	5 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shirts/6_universal.png"),
 	6 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shirts/7_universal.png"),
-	7 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shirts/8_universal.png")
+	7 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shirts/8_universal.png"),
 }
 
 var male_shoes_spritesheet = {
@@ -79,7 +80,7 @@ var male_shoes_spritesheet = {
 	4 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shoes/5_universal.png"),
 	5 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shoes/6_universal.png"),
 	6 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shoes/7_universal.png"),
-	7 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shoes/8_universal.png")
+	7 : preload("res://Assets/Characters/Player/CompositeSpriteMale/Shoes/8_universal.png"),
 }
 
 # Female spritesheets
@@ -88,7 +89,7 @@ var female_body_spritesheet = {
 	1 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Body/2_universal.png"),
 	2 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Body/3_universal.png"),
 	3 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Body/4_universal.png"),
-	4 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Body/5_universal.png")
+	4 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Body/5_universal.png"),
 }
 
 var female_hair_spritesheet = {
@@ -99,7 +100,7 @@ var female_hair_spritesheet = {
 	4 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Hair/5_universal.png"),
 	5 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Hair/6_universal.png"),
 	6 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Hair/7_universal.png"),
-	7 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Hair/8_universal.png")
+	7 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Hair/8_universal.png"),
 }
 
 var female_pants_spritesheet = {
@@ -110,7 +111,7 @@ var female_pants_spritesheet = {
 	4 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Pants/5_universal.png"),
 	5 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Pants/6_universal.png"),
 	6 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Pants/7_universal.png"),
-	7 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Pants/8_universal.png")
+	7 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Pants/8_universal.png"),
 }
 
 var female_shirts_spritesheet = {
@@ -121,7 +122,7 @@ var female_shirts_spritesheet = {
 	4 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/5_universal.png"),
 	5 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/6_universal.png"),
 	6 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/7_universal.png"),
-	7 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/8_universal.png")
+	7 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/8_universal.png"),
 }
 
 var female_shoes_spritesheet = {
@@ -132,18 +133,18 @@ var female_shoes_spritesheet = {
 	4 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shoes/5_universal.png"),
 	5 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shoes/6_universal.png"),
 	6 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shoes/7_universal.png"),
-	7 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shoes/8_universal.png")
+	7 : preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shoes/8_universal.png"),
 }
 
 # Texture getters for each category
 func get_tool_texture(tool_name: String):
-	return tools.get(tool_name, null)
+	return tools_sprite.get(tool_name, null)
 
 func get_weapon_texture(weapon_name: String):
-	return weapons.get(weapon_name, null)
+	return weapons_sprite.get(weapon_name, null)
 
 func get_range_weapon_texture(range_weapon_name: String):
-	return range_weapons.get(range_weapon_name, null)
+	return range_weapons_sprite.get(range_weapon_name, null)
 
 # Helper function to get the current spritesheet based on gender
 func get_body_spritesheet(is_female: bool):

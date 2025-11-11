@@ -6,6 +6,10 @@ const ItemClass = preload("res://Scripts/UI/Inventory/Items/Item.gd")
 @onready var inventory_slots: GridContainer = $TextureRect/GridContainer
 @onready var integrated_hotbar: GridContainer = $TextureRect/IntegratedHotbar
 @onready var equip_slots: = $TextureRect/EquipSlots.get_children()
+@onready var selected_item_label: Label = $SelectedItemLabel
+
+var selected_item_slot = null  # Track which slot is currently selected
+var selected_item = null       # Track the selected item data
 
 func _ready():
 	add_to_group("inventory")
@@ -66,150 +70,162 @@ func initialize_inventory():
 			if hotbar_slots[i].item:
 				hotbar_slots[i].item.queue_free()
 				hotbar_slots[i].item = null
+	
+	# Clear selection when inventory is initialized
+	clear_selection()
 
-func return_held_item_to_original_slot():
-	var holding_item = find_parent("UserInterface").holding_item
-	if holding_item != null:
-		print("Returning held item to original slot before closing inventory")
-		var success = holding_item.return_to_original_slot()
-		if success:
-			find_parent("UserInterface").holding_item = null
-			initialize_inventory()
-			initialize_equips()
-			get_tree().call_group("hotbar", "refresh_hotbar")
-		return success
-	return true
+func clear_selection():
+	if selected_item_slot:
+		selected_item_slot.set_selected(false)
+	selected_item_slot = null
+	selected_item = null
+	update_selected_item_label()  # Update label when clearing selection
 
 func slot_gui_input(event: InputEvent, slot: SlotClass):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-			if find_parent("UserInterface").holding_item != null:
-				# FIX: Check if we can put the item in this slot first
-				if able_to_put_into_slot(slot):
-					if !slot.item:
-						left_click_empty_slot(slot)
-					else:
-						if find_parent("UserInterface").holding_item.item_name != slot.item.item_name:
-							left_click_different_item(event, slot)
-						else:
-							left_click_same_item(slot)
-				else:
-					print("Cannot put this item in equipment slot: ", slot.slot_type)
-			elif slot.item:
-				left_click_not_holding(slot)
-				
-func _input(event):
-	if find_parent("UserInterface").holding_item:
-		find_parent("UserInterface").holding_item.global_position = get_global_mouse_position()
-		
-func able_to_put_into_slot(slot: SlotClass):
-	var holding_item = find_parent("UserInterface").holding_item
-	if holding_item == null:
-		return true
-	
-	# FIX: Add equipment slot validation
-	var holding_item_category = JsonData.item_data[holding_item.item_name]["ItemCategory"]
-	
-	# Check if this is an equipment slot and if the item category matches
-	match slot.slot_type:
-		SlotClass.SlotType.HEAD:
-			return holding_item_category == "Head" or holding_item_category == "Helmet" or holding_item_category == "Hat"
-		SlotClass.SlotType.BODY:
-			return holding_item_category == "Body" or holding_item_category == "Chest" or holding_item_category == "Shirt"
-		SlotClass.SlotType.LEGS:
-			return holding_item_category == "Legs" or holding_item_category == "Pants"
-		SlotClass.SlotType.FOOT:
-			return holding_item_category == "Feet" or holding_item_category == "Boots" or holding_item_category == "Shoes"
-		_:  # Inventory and Hotbar slots accept all items
-			return true
-		
-func left_click_empty_slot(slot: SlotClass):
-	if able_to_put_into_slot(slot):
-		PlayerInventory.add_item_to_empty_slot(find_parent("UserInterface").holding_item, slot)
-		slot.putIntoSlot(find_parent("UserInterface").holding_item)
-		find_parent("UserInterface").holding_item.clear_original_slot()
-		find_parent("UserInterface").holding_item = null
-		
-		# Refresh appropriate displays based on slot type
-		if slot.slot_type == SlotClass.SlotType.HOTBAR:
-			get_tree().call_group("hotbar", "refresh_hotbar")
-		elif slot.slot_type != SlotClass.SlotType.INVENTORY:  # Equipment slot
-			initialize_equips()
-	
-func left_click_different_item(event: InputEvent, slot: SlotClass):
-	if able_to_put_into_slot(slot):
-		# Store both items and their original slots
-		var held_item = find_parent("UserInterface").holding_item
-		var slot_item = slot.item
-		var held_original_slot = held_item.original_slot
-		var held_original_slot_type = held_item.original_slot_type
-		var held_original_slot_index = held_item.original_slot_index
-		
-		PlayerInventory.remove_item(slot)
-		if held_original_slot_type == SlotClass.SlotType.HOTBAR:
-			PlayerInventory.hotbar.erase(held_original_slot_index)
-		elif held_original_slot_type == SlotClass.SlotType.INVENTORY:
-			PlayerInventory.inventory.erase(held_original_slot_index)
-		else:
-			PlayerInventory.equips.erase(held_original_slot_index)
-		
-		PlayerInventory.add_item_to_empty_slot(held_item, slot)
-		if held_original_slot != null:
-			if held_original_slot_type == SlotClass.SlotType.HOTBAR:
-				PlayerInventory.hotbar[held_original_slot_index] = [slot_item.item_name, slot_item.item_quantity]
-			elif held_original_slot_type == SlotClass.SlotType.INVENTORY:
-				PlayerInventory.inventory[held_original_slot_index] = [slot_item.item_name, slot_item.item_quantity]
+			if selected_item_slot == null:
+				# No item selected yet - select this slot if it has an item
+				if slot.item:
+					select_slot(slot)
 			else:
-				PlayerInventory.equips[held_original_slot_index] = [slot_item.item_name, slot_item.item_quantity]
-		
-		# Swap the items visually
-		var temp_item = slot.item
-		slot.pickFromSlot()
-		temp_item.global_position = event.global_position
-		slot.putIntoSlot(held_item)
-		
-		# Update original slots for both items after swap
-		held_item.clear_original_slot()
-		temp_item.set_original_slot(held_original_slot, held_original_slot_type, held_original_slot_index)
-		
-		find_parent("UserInterface").holding_item = temp_item
-		
-		# Refresh appropriate displays based on slot type
-		if slot.slot_type == SlotClass.SlotType.HOTBAR:
-			get_tree().call_group("hotbar", "refresh_hotbar")
-		elif slot.slot_type != SlotClass.SlotType.INVENTORY:
-			initialize_equips()
+				# Already have a selected item - try to move it to this slot
+				if selected_item_slot != slot:
+					move_selected_item_to_slot(slot)
+				else:
+					# Clicking the same slot - deselect it
+					clear_selection()
+				
+func select_slot(slot: SlotClass):
+	# Clear previous selection
+	if selected_item_slot:
+		selected_item_slot.set_selected(false)
+	
+	# Select new slot
+	selected_item_slot = slot
+	selected_item = {
+		"item_name": slot.item.item_name,
+		"item_quantity": slot.item.item_quantity,
+		"slot_type": slot.slot_type,
+		"slot_index": slot.slot_index
+	}
+	slot.set_selected(true)
+	print("Selected item: ", selected_item.item_name, " from slot ", selected_item.slot_index)
+	update_selected_item_label()  # Update label when selecting
 
-func left_click_same_item(slot: SlotClass):
-	if able_to_put_into_slot(slot):
-		var stack_size = int(JsonData.item_data[slot.item.item_name]["StackSize"])
-		var able_to_add = stack_size - slot.item.item_quantity
-		if able_to_add >= find_parent("UserInterface").holding_item.item_quantity:
-			PlayerInventory.add_item_quantity(slot, find_parent("UserInterface").holding_item.item_quantity)
-			slot.item.add_item_quantity(find_parent("UserInterface").holding_item.item_quantity)
-			find_parent("UserInterface").holding_item.clear_original_slot()
-			find_parent("UserInterface").holding_item.queue_free()
-			find_parent("UserInterface").holding_item = null
+func update_selected_item_label():
+	if selected_item:
+		# Show selected item name and quantity
+		selected_item_label.text = "%s x%d" % [selected_item.item_name, selected_item.item_quantity]
+	else:
+		# No item selected
+		selected_item_label.text = ""
+
+func move_selected_item_to_slot(target_slot: SlotClass):
+	if not can_move_to_slot(target_slot):
+		print("Cannot move item to this slot")
+		return
+	
+	var source_slot = selected_item_slot
+	var source_item_data = selected_item
+	
+	# Clear selection first
+	clear_selection()
+	
+	# Handle different cases based on target slot content
+	if target_slot.item == null:
+		# Moving to empty slot
+		move_to_empty_slot(source_slot, target_slot, source_item_data)
+	else:
+		if source_item_data.item_name == target_slot.item.item_name:
+			# Same item type - try to stack
+			stack_items(source_slot, target_slot, source_item_data)
 		else:
-			PlayerInventory.add_item_quantity(slot, able_to_add)
-			slot.item.add_item_quantity(able_to_add)
-			find_parent("UserInterface").holding_item.decrease_item_quantity(able_to_add)
-			initialize_inventory()
-		
-func left_click_not_holding(slot: SlotClass):
-	print("Attempting to pick up item from slot: ", slot.slot_index, " type: ", slot.slot_type)
+			# Different items - swap them
+			swap_items(source_slot, target_slot, source_item_data)
+
+func can_move_to_slot(slot: SlotClass) -> bool:
+	if selected_item_slot == null:
+		return false
 	
-	PlayerInventory.remove_item(slot)
-	find_parent("UserInterface").holding_item = slot.item
+	# Check equipment slot restrictions
+	if slot.slot_type != SlotClass.SlotType.INVENTORY and slot.slot_type != SlotClass.SlotType.HOTBAR:
+		var item_category = JsonData.item_data[selected_item.item_name]["ItemCategory"]
+		match slot.slot_type:
+			SlotClass.SlotType.HEAD:
+				return item_category == "Head" or item_category == "Helmet" or item_category == "Hat"
+			SlotClass.SlotType.BODY:
+				return item_category == "Body" or item_category == "Chest" or item_category == "Shirt"
+			SlotClass.SlotType.LEGS:
+				return item_category == "Legs" or item_category == "Pants"
+			SlotClass.SlotType.FOOT:
+				return item_category == "Feet" or item_category == "Boots" or item_category == "Shoes"
 	
-	print("Item picked up: ", slot.item.item_name if slot.item else "null")
+	return true
+
+func move_to_empty_slot(source_slot: SlotClass, target_slot: SlotClass, source_item_data):
+	# Remove from source
+	PlayerInventory.remove_item(source_slot)
 	
-	slot.pickFromSlot()
-	find_parent("UserInterface").holding_item.set_original_slot(slot, slot.slot_type, slot.slot_index)
-	find_parent("UserInterface").holding_item.global_position = get_global_mouse_position()
+	# Add to target
+	PlayerInventory.add_item_to_empty_slot(source_slot.item, target_slot)
 	
-	# Refresh appropriate displays based on slot type
-	if slot.slot_type == SlotClass.SlotType.HOTBAR:
+	# Move item visually
+	var item = source_slot.item
+	source_slot.pickFromSlot()
+	target_slot.putIntoSlot(item)
+	
+	refresh_appropriate_displays(source_slot, target_slot)
+
+func swap_items(source_slot: SlotClass, target_slot: SlotClass, source_item_data):
+	var target_item = target_slot.item
+	var target_item_data = {
+		"item_name": target_item.item_name,
+		"item_quantity": target_item.item_quantity
+	}
+	
+	# Remove both items from inventory
+	PlayerInventory.remove_item(source_slot)
+	PlayerInventory.remove_item(target_slot)
+	
+	# Add items to new slots
+	PlayerInventory.add_item_to_empty_slot(source_slot.item, target_slot)
+	PlayerInventory.add_item_to_empty_slot(target_item, source_slot)
+	
+	# Swap items visually
+	var source_item = source_slot.item
+	source_slot.pickFromSlot()
+	target_slot.pickFromSlot()
+	
+	target_slot.putIntoSlot(source_item)
+	source_slot.putIntoSlot(target_item)
+	
+	refresh_appropriate_displays(source_slot, target_slot)
+
+func stack_items(source_slot: SlotClass, target_slot: SlotClass, source_item_data):
+	var stack_size = int(JsonData.item_data[source_item_data.item_name]["StackSize"])
+	var able_to_add = stack_size - target_slot.item.item_quantity
+	
+	if able_to_add >= source_item_data.item_quantity:
+		# Can stack all
+		PlayerInventory.add_item_quantity(target_slot, source_item_data.item_quantity)
+		target_slot.item.add_item_quantity(source_item_data.item_quantity)
+		PlayerInventory.remove_item(source_slot)
+		source_slot.pickFromSlot()
+		source_slot.item.queue_free()
+	else:
+		# Can only stack partially
+		PlayerInventory.add_item_quantity(target_slot, able_to_add)
+		target_slot.item.add_item_quantity(able_to_add)
+		PlayerInventory.add_item_quantity(source_slot, -able_to_add)
+		source_slot.item.decrease_item_quantity(able_to_add)
+	
+	refresh_appropriate_displays(source_slot, target_slot)
+
+func refresh_appropriate_displays(source_slot: SlotClass, target_slot: SlotClass):
+	# Refresh displays based on which slots were involved
+	if source_slot.slot_type == SlotClass.SlotType.HOTBAR or target_slot.slot_type == SlotClass.SlotType.HOTBAR:
 		get_tree().call_group("hotbar", "refresh_hotbar")
-	elif slot.slot_type != SlotClass.SlotType.INVENTORY:
+	
+	if source_slot.slot_type != SlotClass.SlotType.INVENTORY or target_slot.slot_type != SlotClass.SlotType.INVENTORY:
 		initialize_equips()

@@ -4,7 +4,7 @@
 		"StackSize": 1
 	},
 	"Slingshot": {
-		"ItemCategory": "Range_Weapon",
+		"ItemCategory": "Range Weapon",
 		"StackSize": 1
 	},
 	"Watering Can": {
@@ -15,12 +15,16 @@
 		"ItemCategory": "Ammo",
 		"StackSize": 99
 	},
+	"Arrow": {
+		"ItemCategory": "Ammo",
+		"StackSize": 99
+	},
 	"Hoe": {
 		"ItemCategory": "Tool",
 		"StackSize": 1
 	},
 	"Cross Bow": {
-		"ItemCategory": "Range_Weapon",
+		"ItemCategory": "Range Weapon",
 		"StackSize": 1
 	},
 	"Black Shirt": {

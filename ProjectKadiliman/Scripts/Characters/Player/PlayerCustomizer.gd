@@ -15,6 +15,8 @@ extends Control
 
 var last_direction: String = "down"
 var rng = RandomNumberGenerator.new()
+var player_node: Node2D = null
+var is_preview_mode: bool = false
 
 func _ready() -> void:
 	load_character_data()
@@ -29,6 +31,38 @@ func _ready() -> void:
 	main_hand.scale = sprite_scale
 	
 	UI.visible = can_customize
+	
+	# If not in customization mode, find and track the player
+	if !can_customize:
+		setup_preview_mode()
+
+func setup_preview_mode():
+	is_preview_mode = true
+	
+	# Connect to inventory updates to track equipment changes
+	if PlayerInventory:
+		PlayerInventory.hotbar_updated.connect(_on_hotbar_updated_preview)
+		PlayerInventory.active_item_updated.connect(_on_active_item_updated_preview)
+	
+	# Try to find the player node in the scene
+	find_player_node()
+
+func find_player_node():
+	# Look for the player in the scene tree
+	player_node = get_tree().get_first_node_in_group("player")
+	if player_node:
+		print("PlayerCustomizer: Found player node, starting preview mode")
+	else:
+		# If player not found yet, try again later
+		call_deferred("find_player_node")
+
+func _on_hotbar_updated_preview():
+	# Update equipment display when hotbar changes
+	update_equipment_display()
+
+func _on_active_item_updated_preview():
+	# Update equipment display when active item changes
+	update_equipment_display()
 
 func load_character_data() -> void:
 	# Data is already in the singleton, just update visuals
@@ -45,11 +79,80 @@ func update_sprites() -> void:
 	}
 	CharacterUtils.update_sprites(PlayerCharacterData.player_character_data, sprites)
 
+func update_equipment_display():
+	var active_item = get_active_hotbar_item()
+	
+	if active_item and not active_item.is_empty():
+		# Show the active hotbar item in main hand
+		update_main_hand_texture(active_item)
+	else:
+		# Fall back to equipped items from PlayerCharacterData
+		var sprites = {
+			"main_hand": main_hand
+		}
+		CharacterUtils.update_sprites(PlayerCharacterData.player_character_data, sprites)
+
+func update_main_hand_texture(item_name: String):
+	if not main_hand:
+		return
+	
+	var texture = null
+	var item_category = JsonData.item_data[item_name]["ItemCategory"]
+	
+	# Get the appropriate sprite based on item category
+	match item_category:
+		"Tool":
+			texture = CompositeSprites.get_tool_texture(item_name)
+		"Weapon":
+			texture = CompositeSprites.get_weapon_texture(item_name)
+		"Range Weapon":
+			texture = CompositeSprites.get_range_weapon_texture(item_name)
+		_:
+			# For other item types, try to get generic item texture
+			texture = CompositeSprites.get_item_texture(item_name)
+	
+	if texture:
+		main_hand.texture = texture
+	else:
+		main_hand.texture = null
+
+func get_active_hotbar_item() -> String:
+	if PlayerInventory and PlayerInventory.active_item_slot >= 0:
+		var slot_index = PlayerInventory.active_item_slot
+		if PlayerInventory.hotbar.has(slot_index):
+			return PlayerInventory.hotbar[slot_index][0]
+	return ""
+
 func _process(delta: float) -> void:
-	handle_preview_input()
+	if is_preview_mode:
+		handle_preview_updates()
+	else:
+		handle_preview_input()
+
+func handle_preview_updates():
+	# In preview mode, mimic the player's state
+	if player_node:
+		# Copy the player's direction and movement state
+		last_direction = player_node.last_direction
+		
+		# Check if player is moving or using item
+		var is_moving = player_node.is_moving
+		var is_running = player_node.is_running
+		var is_using_item = player_node.is_using_item
+		
+		# Update animation based on player state
+		var anim_name = CharacterUtils.get_animation_name(
+			last_direction, 
+			is_moving, 
+			is_running, 
+			is_using_item
+		)
+		CharacterUtils.play_animation(anim, anim_name)
+		
+		# Update equipment display in case it changed
+		update_equipment_display()
 
 func handle_preview_input() -> void:
-	
 	var input_vector = Vector2.ZERO
 	var is_moving = false
 	
@@ -67,22 +170,8 @@ func handle_preview_input() -> void:
 		input_vector.y -= 1
 		is_moving = true
 	
-	
 	if is_moving:
 		last_direction = CharacterUtils.update_direction(input_vector)
-	
-	# Check for equipment changes
-	if Input.is_action_just_pressed("change_tool"):
-		PlayerCharacterData.cycle_tool()
-		update_sprites()
-	
-	if Input.is_action_just_pressed("change_weapon"):
-		PlayerCharacterData.cycle_weapon()
-		update_sprites()
-	
-	if Input.is_action_just_pressed("change_range_weapon"):
-		PlayerCharacterData.cycle_range_weapon()
-		update_sprites()
 	
 	# Determine animation
 	var is_running = Input.is_action_pressed("run")
@@ -136,7 +225,6 @@ func _on_change_sex_pressed() -> void:
 
 func _on_finish_customization_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Core/map.tscn")
-
 
 func _on_player_animation_animation_finished(anim_name: StringName) -> void:
 	pass # Replace with function body.

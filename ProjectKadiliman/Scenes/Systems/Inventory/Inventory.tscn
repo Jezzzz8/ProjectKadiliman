@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://hdwgex378b5p"]
+[gd_scene load_steps=14 format=3 uid="uid://hdwgex378b5p"]
 
 [ext_resource type="Script" uid="uid://dwpmwufbp8ms7" path="res://Scripts/UI/Inventory/MainInventory/Inventory.gd" id="1_33nr4"]
 [ext_resource type="Texture2D" uid="uid://bbk7684aol0cx" path="res://Assets/Environment/UI/Inventory/Background/InventoryBackground.png" id="1_f47to"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dn8ud86v6grfw" path="res://Assets/Environment/UI/Icons/body.png" id="7_pliuh"]
 [ext_resource type="Texture2D" uid="uid://cq0yrrbbvqpxq" path="res://Assets/Environment/UI/Icons/legs.png" id="8_1bmui"]
 [ext_resource type="Texture2D" uid="uid://bqn3akirmo4c7" path="res://Assets/Environment/UI/Icons/foot.png" id="9_n5btx"]
+[ext_resource type="FontFile" uid="uid://25ygueolh1n1" path="res://Assets/Environment/UI/Fonts/PixelOperator8.ttf" id="10_pliuh"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_33nr4"]
 content_margin_left = 1.0
@@ -421,3 +422,23 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("9_n5btx")
+
+[node name="SelectedItemLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.0
+offset_top = 96.0
+offset_right = 69.0
+offset_bottom = 119.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("10_pliuh")
+text = "SampleText"
+horizontal_alignment = 1
+vertical_alignment = 1

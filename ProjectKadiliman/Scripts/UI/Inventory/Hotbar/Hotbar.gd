@@ -41,13 +41,14 @@ func initialize_hotbar():
 func slot_gui_input(event: InputEvent, slot: SlotClass):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-			# Only allow selection if we're not holding an item
-			if find_parent("UserInterface").holding_item == null:
-				select_slot(slot.slot_index)
-			else:
-				# If holding an item, ignore the click to prevent inventory management
-				# The player should use the inventory UI for hotbar management
-				print("Use inventory to manage hotbar items")
+			# Check if inventory is open - if it is, don't allow hotbar selection
+			var inventory = get_tree().get_first_node_in_group("inventory")
+			if inventory and inventory.visible:
+				print("Close inventory to select hotbar slots")
+				return
+			
+			# Allow selection in the hotbar
+			select_slot(slot.slot_index)
 
 # NEW: Function to select a specific slot
 func select_slot(slot_index: int):

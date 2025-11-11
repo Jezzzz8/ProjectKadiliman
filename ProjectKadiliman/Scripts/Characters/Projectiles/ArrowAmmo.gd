@@ -1,15 +1,15 @@
 extends Area2D
 
-var speed = 1000
-var max_distance = 500  # Maximum travel distance
+var speed = 1200
+var max_distance = 800  # Maximum travel distance
 var distance_traveled = 0.0
 var direction: float
 
-@onready var collision_shape : CollisionShape2D = $CollisionShape2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 func setup(spawn_position: Vector2, angle: float) -> void:
 	global_position = spawn_position
-	global_rotation = angle
+	global_rotation = angle + PI/2
 	direction = angle
 
 func _physics_process(delta: float) -> void:
@@ -23,7 +23,6 @@ func _physics_process(delta: float) -> void:
 		return
 
 func _on_body_entered(body: Node2D) -> void:
-	# Handle collision with physics bodies
 	print("Peeble hit: ", body)
 	queue_free()
 
