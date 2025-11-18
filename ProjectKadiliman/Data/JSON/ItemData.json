@@ -1,62 +1,339 @@
 {
 	"Shovel": {
 		"ItemCategory": "Tool",
-		"StackSize": 1
+		"StackSize": 1,
+		"DisplayName": "Shovel",
+		"Description": "A sturdy shovel for digging soil and moving earth. Essential for any serious gardener or treasure hunter.",
+		"Rarity": "Common",
+		"Value": 25,
+		"UseEffect": "Dig"
 	},
 	"Slingshot": {
 		"ItemCategory": "Range Weapon",
-		"StackSize": 1
+		"StackSize": 1,
+		"DisplayName": "Slingshot",
+		"Description": "A simple but effective ranged weapon. Fires pebbles with surprising accuracy.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Shoot",
+		"AmmoType": "Peeble",
+		"Damage": 8
 	},
 	"Watering Can": {
 		"ItemCategory": "Tool",
-		"StackSize": 1
+		"StackSize": 1,
+		"DisplayName": "Watering Can",
+		"Description": "A trusty watering can for hydrating plants. Keep your crops happy and healthy!",
+		"Rarity": "Common",
+		"Value": 10,
+		"UseEffect": "Water"
 	},
 	"Peeble": {
-		"ItemCategory": "Ammo",
-		"StackSize": 99
+		"ItemCategory": "Resource",
+		"StackSize": 99,
+		"DisplayName": "Peeble",
+		"Description": "Small, smooth stones perfect for slingshot ammunition. Found almost everywhere.",
+		"Rarity": "Common",
+		"Value": 1,
+		"UseEffect": "Ammo",
+		"AmmoFor": "Slingshot"
 	},
 	"Arrow": {
-		"ItemCategory": "Ammo",
-		"StackSize": 99
+		"ItemCategory": "Resource",
+		"StackSize": 99,
+		"DisplayName": "Arrow",
+		"Description": "Well-crafted arrows with sharp tips. Essential ammunition for the Cross Bow.",
+		"Rarity": "Uncommon",
+		"Value": 3,
+		"UseEffect": "Ammo",
+		"AmmoFor": "Cross Bow"
 	},
 	"Hoe": {
 		"ItemCategory": "Tool",
-		"StackSize": 1
+		"StackSize": 1,
+		"DisplayName": "Hoe",
+		"Description": "A farming tool used for tilling soil and preparing land for planting crops.",
+		"Rarity": "Common",
+		"Value": 20,
+		"UseEffect": "Till"
 	},
 	"Cross Bow": {
 		"ItemCategory": "Range Weapon",
-		"StackSize": 1
+		"StackSize": 1,
+		"DisplayName": "Cross Bow",
+		"Description": "A powerful ranged weapon that fires arrows with great force and precision.",
+		"Rarity": "Uncommon",
+		"Value": 75,
+		"UseEffect": "Shoot",
+		"AmmoType": "Arrow",
+		"Damage": 15
 	},
 	"Black Shirt": {
-		"ItemCategory": "Body",
-		"StackSize": 1
+		"ItemCategory": "Shirts",
+		"StackSize": 1,
+		"DisplayName": "Black Shirt",
+		"Description": "A simple black shirt. Stylish and versatile for any occasion.",
+		"Rarity": "Common",
+		"Value": 8,
+		"UseEffect": "Equip",
+		"Defense": 1
 	},
 	"Blue Shirt": {
-		"ItemCategory": "Body",
-		"StackSize": 1
+		"ItemCategory": "Shirts",
+		"StackSize": 1,
+		"DisplayName": "Blue Shirt",
+		"Description": "A comfortable blue shirt the color of the summer sky.",
+		"Rarity": "Common",
+		"Value": 8,
+		"UseEffect": "Equip",
+		"Defense": 1
 	},
 	"Brown Shirt": {
-		"ItemCategory": "Body",
-		"StackSize": 1
+		"ItemCategory": "Shirts",
+		"StackSize": 1,
+		"DisplayName": "Brown Shirt",
+		"Description": "An earthy brown shirt, perfect for blending in with nature.",
+		"Rarity": "Common",
+		"Value": 8,
+		"UseEffect": "Equip",
+		"Defense": 1
 	},
 	"Green Shirt": {
-		"ItemCategory": "Body",
-		"StackSize": 1
+		"ItemCategory": "Shirts",
+		"StackSize": 1,
+		"DisplayName": "Green Shirt",
+		"Description": "A vibrant green shirt that reminds you of fresh spring leaves.",
+		"Rarity": "Common",
+		"Value": 8,
+		"UseEffect": "Equip",
+		"Defense": 1
 	},
 	"Orange Shirt": {
-		"ItemCategory": "Body",
-		"StackSize": 1
+		"ItemCategory": "Shirts",
+		"StackSize": 1,
+		"DisplayName": "Orange Shirt",
+		"Description": "A bright orange shirt that stands out in any crowd.",
+		"Rarity": "Common",
+		"Value": 8,
+		"UseEffect": "Equip",
+		"Defense": 1
 	},
 	"Purple Shirt": {
-		"ItemCategory": "Body",
-		"StackSize": 1
+		"ItemCategory": "Shirts",
+		"StackSize": 1,
+		"DisplayName": "Purple Shirt",
+		"Description": "A regal purple shirt fit for nobility or anyone with good taste.",
+		"Rarity": "Common",
+		"Value": 8,
+		"UseEffect": "Equip",
+		"Defense": 1
 	},
 	"Red Shirt": {
-		"ItemCategory": "Body",
-		"StackSize": 1
+		"ItemCategory": "Shirts",
+		"StackSize": 1,
+		"DisplayName": "Red Shirt",
+		"Description": "A bold red shirt that shows confidence and passion.",
+		"Rarity": "Common",
+		"Value": 8,
+		"UseEffect": "Equip",
+		"Defense": 1
 	},
 	"Yellow Shirt": {
-		"ItemCategory": "Body",
-		"StackSize": 1
+		"ItemCategory": "Shirts",
+		"StackSize": 1,
+		"DisplayName": "Yellow Shirt",
+		"Description": "A cheerful yellow shirt as bright as the morning sun.",
+		"Rarity": "Common",
+		"Value": 8,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Black Pants": {
+		"ItemCategory": "Pants",
+		"StackSize": 1,
+		"DisplayName": "Black Pants",
+		"Description": "Classic black pants that go with everything. Timeless and practical.",
+		"Rarity": "Common",
+		"Value": 12,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Blue Pants": {
+		"ItemCategory": "Pants",
+		"StackSize": 1,
+		"DisplayName": "Blue Pants",
+		"Description": "Comfortable blue pants perfect for everyday adventures.",
+		"Rarity": "Common",
+		"Value": 12,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Brown Pants": {
+		"ItemCategory": "Pants",
+		"StackSize": 1,
+		"DisplayName": "Brown Pants",
+		"Description": "Durable brown pants ideal for outdoor activities and hard work.",
+		"Rarity": "Common",
+		"Value": 12,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Green Pants": {
+		"ItemCategory": "Pants",
+		"StackSize": 1,
+		"DisplayName": "Green Pants",
+		"Description": "Vibrant green pants that blend well with forest surroundings.",
+		"Rarity": "Common",
+		"Value": 12,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Orange Pants": {
+		"ItemCategory": "Pants",
+		"StackSize": 1,
+		"DisplayName": "Orange Pants",
+		"Description": "Bright orange pants for those who like to stand out from the crowd.",
+		"Rarity": "Common",
+		"Value": 12,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Purple Pants": {
+		"ItemCategory": "Pants",
+		"StackSize": 1,
+		"DisplayName": "Purple Pants",
+		"Description": "Elegant purple pants with a touch of royal flair.",
+		"Rarity": "Common",
+		"Value": 12,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Red Pants": {
+		"ItemCategory": "Pants",
+		"StackSize": 1,
+		"DisplayName": "Red Pants",
+		"Description": "Bold red pants that show confidence and energy.",
+		"Rarity": "Common",
+		"Value": 12,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Yellow Pants": {
+		"ItemCategory": "Pants",
+		"StackSize": 1,
+		"DisplayName": "Yellow Pants",
+		"Description": "Cheerful yellow pants as bright as a sunny day.",
+		"Rarity": "Common",
+		"Value": 12,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Black Shoes": {
+		"ItemCategory": "Shoes",
+		"StackSize": 1,
+		"DisplayName": "Black Shoes",
+		"Description": "Comfortable black shoes suitable for any occasion.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Blue Shoes": {
+		"ItemCategory": "Shoes",
+		"StackSize": 1,
+		"DisplayName": "Blue Shoes",
+		"Description": "Stylish blue shoes perfect for walking and light activities.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Brown Shoes": {
+		"ItemCategory": "Shoes",
+		"StackSize": 1,
+		"DisplayName": "Brown Shoes",
+		"Description": "Durable brown shoes great for outdoor adventures.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Green Shoes": {
+		"ItemCategory": "Shoes",
+		"StackSize": 1,
+		"DisplayName": "Green Shoes",
+		"Description": "Vibrant green shoes that match well with nature.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Orange Shoes": {
+		"ItemCategory": "Shoes",
+		"StackSize": 1,
+		"DisplayName": "Orange Shoes",
+		"Description": "Bright orange shoes for those who want to make a statement.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Purple Shoes": {
+		"ItemCategory": "Shoes",
+		"StackSize": 1,
+		"DisplayName": "Purple Shoes",
+		"Description": "Elegant purple shoes with a unique and stylish look.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Red Shoes": {
+		"ItemCategory": "Shoes",
+		"StackSize": 1,
+		"DisplayName": "Red Shoes",
+		"Description": "Bold red shoes that add energy to any outfit.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Yellow Shoes": {
+		"ItemCategory": "Shoes",
+		"StackSize": 1,
+		"DisplayName": "Yellow Shoes",
+		"Description": "Cheerful yellow shoes as bright as sunshine.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Equip",
+		"Defense": 1
+	},
+	"Bracelet": {
+		"ItemCategory": "Accessory",
+		"StackSize": 1,
+		"DisplayName": "Bracelet",
+		"Description": "Cool Bracelet.",
+		"Rarity": "Common",
+		"Value": 30,
+		"UseEffect": "Equip",
+		"Defense": 5
+	},
+	"Egg": {
+		"ItemCategory": "Resource",
+		"StackSize": 99,
+		"DisplayName": "Egg",
+		"Description": "A fresh chicken egg. Perfect for cooking or eating raw if you're brave enough.",
+		"Rarity": "Common",
+		"Value": 15,
+		"UseEffect": "Consume"
+	},
+	"Milk": {
+		"ItemCategory": "Resource",
+		"StackSize": 8,
+		"DisplayName": "Milk",
+		"Description": "Fresh milk from a happy cow. Nutritious and perfect for drinking or cooking.",
+		"Rarity": "Common",
+		"Value": 25,
+		"UseEffect": "Consume"
 	},
 }

@@ -9,15 +9,19 @@ static var player_character_data: Dictionary = {
 	"is_female": false,
 	"current_tool": "none",
 	"current_weapon": "none",
-	"current_range_weapon": "none"
+	"current_range_weapon": "none",
+	"hair_color": "Black"  # NEW: Added hair color field
 }
 
 static var available_tools: Array = ["none", "Hoe", "Shovel", "Watering Can"]
 static var available_weapons: Array = ["none"]
 static var available_range_weapons: Array = ["none", "Slingshot"]
 
+# NEW: Available hair colors
+static var available_hair_colors: Array = ["Black", "Blue", "Brown", "Green", "Orange", "Purple", "Red", "Yellow"]
+
 static func validate_data(data: Dictionary) -> bool:
-	return data.has_all(["body", "hair", "pants", "shirts", "shoes", "is_female", "current_tool", "current_weapon", "current_range_weapon"])
+	return data.has_all(["body", "hair", "pants", "shirts", "shoes", "is_female", "current_tool", "current_weapon", "current_range_weapon", "hair_color"])
 
 static func get_default_data() -> Dictionary:
 	return {
@@ -29,8 +33,44 @@ static func get_default_data() -> Dictionary:
 		"is_female": false,
 		"current_tool": "none",
 		"current_weapon": "none",
-		"current_range_weapon": "none"
+		"current_range_weapon": "none",
+		"hair_color": "Black"  # NEW: Default hair color
 	}
+
+# NEW: Get hair texture with current color
+static func get_hair_texture():
+	var hair_style = player_character_data.hair
+	var hair_color = player_character_data.hair_color
+	var is_female = player_character_data.is_female
+	
+	if CompositeSprites:
+		return CompositeSprites.get_hair_texture(hair_style + 1, hair_color, is_female)
+	else:
+		print("Error: CompositeSprites autoload not found")
+		return null
+
+# NEW: Cycle hair color
+static func cycle_hair_color():
+	var current_index = available_hair_colors.find(player_character_data.hair_color)
+	if current_index == -1:
+		current_index = 0
+	
+	var new_index = (current_index + 1) % available_hair_colors.size()
+	player_character_data.hair_color = available_hair_colors[new_index]
+	
+	print("Hair color changed to: ", player_character_data.hair_color)
+
+# NEW: Get current hair color
+static func get_current_hair_color() -> String:
+	return player_character_data.hair_color
+
+# NEW: Set hair color directly
+static func set_hair_color(color_name: String):
+	if color_name in available_hair_colors:
+		player_character_data.hair_color = color_name
+		print("Hair color set to: ", color_name)
+	else:
+		print("Error: Invalid hair color: ", color_name)
 
 # NEW: Sync equipment from inventory
 static func sync_equipment_from_inventory():

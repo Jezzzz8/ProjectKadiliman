@@ -68,16 +68,70 @@ func load_character_data() -> void:
 	# Data is already in the singleton, just update visuals
 	update_sprites()
 
+# UPDATED: Update sprites to include hair color
 func update_sprites() -> void:
-	var sprites = {
-		"body": bodySprite,
-		"hair": hairSprite,
-		"pants": pantsSprite,
-		"shirts": shirtsSprite,
-		"shoes": shoesSprite,
-		"main_hand": main_hand
-	}
-	CharacterUtils.update_sprites(PlayerCharacterData.player_character_data, sprites)
+	var data = PlayerCharacterData.player_character_data
+	var is_female = data.is_female
+	
+	# Update body
+	if bodySprite:
+		var body_texture = CompositeSprites.get_body_texture(data.body, is_female)
+		bodySprite.texture = body_texture
+		print("Body updated: ", data.body, " Texture: ", body_texture != null)
+	
+	# Update hair with color
+	update_hair_with_color()
+	
+	# Update shirts - FIXED: Use index to get the correct texture
+	if shirtsSprite:
+		var shirts_spritesheet = CompositeSprites.get_shirts_spritesheet(is_female)
+		var shirt_keys = shirts_spritesheet.keys()
+		if data.shirts < shirt_keys.size():
+			var shirt_key = shirt_keys[data.shirts]
+			shirtsSprite.texture = shirts_spritesheet[shirt_key]
+			print("Shirt updated: ", data.shirts, " Key: ", shirt_key, " Texture: ", shirtsSprite.texture != null)
+		else:
+			print("Invalid shirt index: ", data.shirts)
+	
+	# Update pants - FIXED: Use index to get the correct texture
+	if pantsSprite:
+		var pants_spritesheet = CompositeSprites.get_pants_spritesheet(is_female)
+		var pants_keys = pants_spritesheet.keys()
+		if data.pants < pants_keys.size():
+			var pants_key = pants_keys[data.pants]
+			pantsSprite.texture = pants_spritesheet[pants_key]
+			print("Pants updated: ", data.pants, " Key: ", pants_key, " Texture: ", pantsSprite.texture != null)
+		else:
+			print("Invalid pants index: ", data.pants)
+	
+	# Update shoes - FIXED: Use index to get the correct texture
+	if shoesSprite:
+		var shoes_spritesheet = CompositeSprites.get_shoes_spritesheet(is_female)
+		var shoes_keys = shoes_spritesheet.keys()
+		if data.shoes < shoes_keys.size():
+			var shoes_key = shoes_keys[data.shoes]
+			shoesSprite.texture = shoes_spritesheet[shoes_key]
+			print("Shoes updated: ", data.shoes, " Key: ", shoes_key, " Texture: ", shoesSprite.texture != null)
+		else:
+			print("Invalid shoes index: ", data.shoes)
+
+# NEW: Update hair sprite with current color
+func update_hair_with_color():
+	if not hairSprite:
+		return
+	
+	var hair_style = PlayerCharacterData.player_character_data.hair
+	var current_color = PlayerCharacterData.get_current_hair_color()  # Use the autoload
+	var is_female = PlayerCharacterData.player_character_data.is_female
+	
+	# Get the hair texture with current color
+	var hair_texture = CompositeSprites.get_hair_texture(hair_style + 1, current_color, is_female)
+	
+	if hair_texture:
+		hairSprite.texture = hair_texture
+		print("Hair updated: Style ", hair_style + 1, " Color: ", current_color)
+	else:
+		print("Hair texture not found for style ", hair_style + 1, " color ", current_color)
 
 func update_equipment_display():
 	var active_item = get_active_hotbar_item()
@@ -178,41 +232,83 @@ func handle_preview_input() -> void:
 	var anim_name = CharacterUtils.get_animation_name(last_direction, is_moving, is_running)
 	CharacterUtils.play_animation(anim, anim_name)
 
-# UI Button handlers (keep your existing ones)
+# UI Button handlers (updated with hair color)
+
 func _on_change_body_pressed() -> void:
 	var spritesheet = CompositeSprites.get_body_spritesheet(PlayerCharacterData.player_character_data.is_female)
 	PlayerCharacterData.player_character_data.body = (PlayerCharacterData.player_character_data.body + 1) % spritesheet.size()
 	update_sprites()
 
+# UPDATED: Change Hair button now shows black base color
 func _on_change_hair_pressed() -> void:
+	# Change hair style but always show black color for the base
 	var spritesheet = CompositeSprites.get_hair_spritesheet(PlayerCharacterData.player_character_data.is_female)
-	PlayerCharacterData.player_character_data.hair = (PlayerCharacterData.player_character_data.hair + 1) % spritesheet.size()
-	update_sprites()
+	PlayerCharacterData.player_character_data.hair = (PlayerCharacterData.player_character_data.hair + 1) % 8  # 8 hair styles
+	
+	# NEW: Temporarily show black color when changing hair style using autoload
+	var temp_hair_color = PlayerCharacterData.get_current_hair_color()  # Store current color
+	PlayerCharacterData.set_hair_color("Black")  # Temporarily set to black
+	update_hair_with_color()
+	PlayerCharacterData.set_hair_color(temp_hair_color)  # Restore original color
+	
+	print("Changed hair style to: ", PlayerCharacterData.player_character_data.hair + 1, " (showing black base)")
+
+# NEW: Implement hair color change - keeps the current hair style but changes color
+func _on_change_hair_color_pressed() -> void:
+	# Use the autoload function
+	PlayerCharacterData.cycle_hair_color()
+	print("Changing hair color to: ", PlayerCharacterData.get_current_hair_color(), " on style ", PlayerCharacterData.player_character_data.hair + 1)
+	update_hair_with_color()
 
 func _on_change_shirts_pressed() -> void:
 	var spritesheet = CompositeSprites.get_shirts_spritesheet(PlayerCharacterData.player_character_data.is_female)
-	PlayerCharacterData.player_character_data.shirts = (PlayerCharacterData.player_character_data.shirts + 1) % spritesheet.size()
+	# Use the actual number of available shirts (8 colors)
+	PlayerCharacterData.player_character_data.shirts = (PlayerCharacterData.player_character_data.shirts + 1) % 8
 	update_sprites()
+	print("Changed shirt to index: ", PlayerCharacterData.player_character_data.shirts)
 
 func _on_change_pants_pressed() -> void:
 	var spritesheet = CompositeSprites.get_pants_spritesheet(PlayerCharacterData.player_character_data.is_female)
-	PlayerCharacterData.player_character_data.pants = (PlayerCharacterData.player_character_data.pants + 1) % spritesheet.size()
+	PlayerCharacterData.player_character_data.pants = (PlayerCharacterData.player_character_data.pants + 1) % 8
 	update_sprites()
+	print("Changed pants to index: ", PlayerCharacterData.player_character_data.pants)
 
 func _on_change_shoes_pressed() -> void:
 	var spritesheet = CompositeSprites.get_shoes_spritesheet(PlayerCharacterData.player_character_data.is_female)
-	PlayerCharacterData.player_character_data.shoes = (PlayerCharacterData.player_character_data.shoes + 1) % spritesheet.size()
+	PlayerCharacterData.player_character_data.shoes = (PlayerCharacterData.player_character_data.shoes + 1) % 8
 	update_sprites()
+	print("Changed shoes to index: ", PlayerCharacterData.player_character_data.shoes)
 
+# UPDATED: Randomize to include hair color
 func _on_randomize_button_pressed() -> void:
 	var data = PlayerCharacterData.player_character_data
-	data.body = rng.randi_range(0, CompositeSprites.get_body_spritesheet(data.is_female).size() - 1)
-	data.hair = rng.randi_range(0, CompositeSprites.get_hair_spritesheet(data.is_female).size() - 1)
-	data.pants = rng.randi_range(0, CompositeSprites.get_pants_spritesheet(data.is_female).size() - 1)
-	data.shirts = rng.randi_range(0, CompositeSprites.get_shirts_spritesheet(data.is_female).size() - 1)
-	data.shoes = rng.randi_range(0, CompositeSprites.get_shoes_spritesheet(data.is_female).size() - 1)
+	
+	# Randomize body (0-4)
+	data.body = rng.randi_range(0, 4)
+	
+	# Randomize hair style (0-7 for 8 styles)
+	data.hair = rng.randi_range(0, 7)
+	
+	# Randomize clothing (0-7 for 8 colors each)
+	data.pants = rng.randi_range(0, 7)
+	data.shirts = rng.randi_range(0, 7)
+	data.shoes = rng.randi_range(0, 7)
+	
+	# Randomize hair color
+	var random_color_index = rng.randi_range(0, PlayerCharacterData.available_hair_colors.size() - 1)
+	PlayerCharacterData.set_hair_color(PlayerCharacterData.available_hair_colors[random_color_index])
+	
+	print("Randomized character:")
+	print("  Body: ", data.body)
+	print("  Hair Style: ", data.hair + 1)
+	print("  Hair Color: ", PlayerCharacterData.get_current_hair_color())
+	print("  Shirt: ", data.shirts)
+	print("  Pants: ", data.pants)
+	print("  Shoes: ", data.shoes)
+	
 	update_sprites()
 
+# UPDATED: Gender change to reset hair color
 func _on_change_sex_pressed() -> void:
 	PlayerCharacterData.player_character_data.is_female = !PlayerCharacterData.player_character_data.is_female
 	# Reset to first variant when changing gender
@@ -221,10 +317,29 @@ func _on_change_sex_pressed() -> void:
 	PlayerCharacterData.player_character_data.pants = 0
 	PlayerCharacterData.player_character_data.shirts = 0
 	PlayerCharacterData.player_character_data.shoes = 0
+	
+	# Reset hair color to black using autoload
+	PlayerCharacterData.set_hair_color("Black")
+	
 	update_sprites()
 
 func _on_finish_customization_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Core/map.tscn")
+	# Ensure all data is properly set
+	print("Final character data:")
+	print("  Body: ", PlayerCharacterData.player_character_data.body)
+	print("  Hair: ", PlayerCharacterData.player_character_data.hair)
+	print("  Hair Color: ", PlayerCharacterData.player_character_data.hair_color)
+	print("  Shirts: ", PlayerCharacterData.player_character_data.shirts)
+	print("  Pants: ", PlayerCharacterData.player_character_data.pants)
+	print("  Shoes: ", PlayerCharacterData.player_character_data.shoes)
+	print("  Is Female: ", PlayerCharacterData.player_character_data.is_female)
+	
+	# NEW: Sync equipment with inventory
+	if PlayerInventory:
+		PlayerInventory.update_equipment_from_customizer()
+		print("Equipment synced with inventory")
+	
+	get_tree().change_scene_to_file("res://Scenes/Core/Forest.tscn")
 
 func _on_player_animation_animation_finished(anim_name: StringName) -> void:
 	pass # Replace with function body.

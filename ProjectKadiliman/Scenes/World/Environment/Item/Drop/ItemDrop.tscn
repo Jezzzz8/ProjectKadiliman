@@ -1,12 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://omwijs4bo70u"]
 
 [ext_resource type="Script" uid="uid://dgr7ju64jlas2" path="res://Scripts/World/Environment/Item/ItemDrop.gd" id="1_6u5im"]
-[ext_resource type="Texture2D" uid="uid://bpoadgh62rfq" path="res://Assets/Environment/Items/Peeble.png" id="2_6msdx"]
+[ext_resource type="Texture2D" uid="uid://d0d54er5hrkup" path="res://Assets/Environment/Items/Peeble.png" id="2_6msdx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_83184"]
 radius = 24.0
 
 [node name="ItemDrop" type="Area2D" groups=["pickup_items"]]
+y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_6u5im")
 
@@ -15,6 +16,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_6msdx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_83184")
 
-[connection signal="body_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

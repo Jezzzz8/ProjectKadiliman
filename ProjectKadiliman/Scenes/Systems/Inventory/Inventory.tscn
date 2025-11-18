@@ -1,15 +1,16 @@
-[gd_scene load_steps=14 format=3 uid="uid://hdwgex378b5p"]
+[gd_scene load_steps=18 format=3 uid="uid://hdwgex378b5p"]
 
 [ext_resource type="Script" uid="uid://dwpmwufbp8ms7" path="res://Scripts/UI/Inventory/MainInventory/Inventory.gd" id="1_33nr4"]
-[ext_resource type="Texture2D" uid="uid://bbk7684aol0cx" path="res://Assets/Environment/UI/Inventory/Background/InventoryBackground.png" id="1_f47to"]
 [ext_resource type="Texture2D" uid="uid://boefrcvuafu57" path="res://Assets/Environment/UI/Inventory/Background/Inventory_Slot_Empty.png" id="2_f47to"]
+[ext_resource type="Texture2D" uid="uid://6kanryg0w8gr" path="res://Assets/Environment/UI/Inventory/Background/InventoryBackgroundVersion2.png" id="2_n5btx"]
 [ext_resource type="Script" uid="uid://chkrs746ws27f" path="res://Scripts/UI/Inventory/Slots/Slot.gd" id="3_f47to"]
 [ext_resource type="PackedScene" uid="uid://rewc5j8f4xeh" path="res://Scenes/Characters/Player/playerCustomizer.tscn" id="5_r8ojd"]
 [ext_resource type="Texture2D" uid="uid://dcorgj5c2mwh6" path="res://Assets/Environment/UI/Icons/head.png" id="6_0c1kl"]
 [ext_resource type="Texture2D" uid="uid://dn8ud86v6grfw" path="res://Assets/Environment/UI/Icons/body.png" id="7_pliuh"]
 [ext_resource type="Texture2D" uid="uid://cq0yrrbbvqpxq" path="res://Assets/Environment/UI/Icons/legs.png" id="8_1bmui"]
 [ext_resource type="Texture2D" uid="uid://bqn3akirmo4c7" path="res://Assets/Environment/UI/Icons/foot.png" id="9_n5btx"]
-[ext_resource type="FontFile" uid="uid://25ygueolh1n1" path="res://Assets/Environment/UI/Fonts/PixelOperator8.ttf" id="10_pliuh"]
+[ext_resource type="FontFile" uid="uid://cds4uqc4c6bqp" path="res://Assets/Environment/UI/Fonts/PixelOperator8.ttf" id="10_pliuh"]
+[ext_resource type="FontFile" uid="uid://c7gdnqh81ufha" path="res://Assets/Environment/UI/Fonts/PixelOperator8-Bold.ttf" id="11_1bmui"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_33nr4"]
 content_margin_left = 1.0
@@ -20,6 +21,15 @@ texture = ExtResource("2_f47to")
 texture = ExtResource("2_f47to")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_svpwm"]
+texture = ExtResource("2_f47to")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lfe41"]
+texture = ExtResource("2_f47to")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1bmui"]
+texture = ExtResource("2_f47to")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n5btx"]
 texture = ExtResource("2_f47to")
 
 [node name="Inventory" type="Control" groups=["inventory"]]
@@ -46,15 +56,17 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("1_f47to")
+texture = ExtResource("2_n5btx")
 stretch_mode = 2
 
 [node name="PlayerCustomizer" parent="TextureRect" instance=ExtResource("5_r8ojd")]
+visible = false
 layout_mode = 1
-offset_left = 9.0
-offset_top = -1.0
-offset_right = 9.0
-offset_bottom = -1.0
+offset_left = 8.0
+offset_top = 28.0
+offset_right = 8.0
+offset_bottom = 28.0
+sprite_scale = Vector2(1.2, 1.2)
 can_customize = false
 
 [node name="GridContainer" type="GridContainer" parent="TextureRect"]
@@ -268,61 +280,61 @@ mouse_filter = 2
 theme_override_constants/h_separation = -3
 columns = 10
 
-[node name="HotbarSlot1" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot1" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot2" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot2" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot3" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot3" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot4" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot4" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot5" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot5" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot6" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot6" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot7" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot7" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot8" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot8" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot9" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot9" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
 script = ExtResource("3_f47to")
 
-[node name="HotbarSlot10" type="Panel" parent="TextureRect/IntegratedHotbar"]
+[node name="HotbarSlot10" type="Panel" parent="TextureRect/IntegratedHotbar" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_r8ojd")
@@ -339,7 +351,7 @@ theme_override_constants/h_separation = 84
 theme_override_constants/v_separation = -3
 columns = 2
 
-[node name="HeadSlot" type="Panel" parent="TextureRect/EquipSlots"]
+[node name="HeadSlot" type="Panel" parent="TextureRect/EquipSlots" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_svpwm")
@@ -360,7 +372,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_0c1kl")
 
-[node name="BodySlot" type="Panel" parent="TextureRect/EquipSlots"]
+[node name="BodySlot" type="Panel" parent="TextureRect/EquipSlots" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_svpwm")
@@ -381,7 +393,18 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_pliuh")
 
-[node name="LegsSlot" type="Panel" parent="TextureRect/EquipSlots"]
+[node name="AccesorySlot2" type="Panel" parent="TextureRect/EquipSlots" groups=["slots"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_lfe41")
+script = ExtResource("3_f47to")
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/EquipSlots/AccesorySlot2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LegsSlot" type="Panel" parent="TextureRect/EquipSlots" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_svpwm")
@@ -402,7 +425,18 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("8_1bmui")
 
-[node name="FootSlot" type="Panel" parent="TextureRect/EquipSlots"]
+[node name="AccesorySlot" type="Panel" parent="TextureRect/EquipSlots" groups=["slots"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_lfe41")
+script = ExtResource("3_f47to")
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/EquipSlots/AccesorySlot"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FootSlot" type="Panel" parent="TextureRect/EquipSlots" groups=["slots"]]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_svpwm")
@@ -423,22 +457,62 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("9_n5btx")
 
-[node name="SelectedItemLabel" type="Label" parent="."]
+[node name="SelectedItemName" type="Label" parent="TextureRect"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -69.0
-offset_top = 96.0
-offset_right = 69.0
-offset_bottom = 119.0
+offset_left = -279.5
+offset_top = 283.0
+offset_right = -87.5
+offset_bottom = 299.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_constants/shadow_outline_size = 1
-theme_override_fonts/font = ExtResource("10_pliuh")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_1bmui")
+theme_override_font_sizes/font_size = 16
 text = "SampleText"
 horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="SelectedItemDescription" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 310.0
+offset_right = 215.0
+offset_bottom = 352.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("10_pliuh")
+theme_override_font_sizes/font_size = 8
+text = "Sample Description"
+horizontal_alignment = 3
+autowrap_mode = 2
+justification_flags = 161
+
+[node name="SelectedItemStats" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 360.0
+offset_right = 215.0
+offset_bottom = 383.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_1bmui")
+theme_override_font_sizes/font_size = 8
+text = "Sample Stats"
+horizontal_alignment = 3
+autowrap_mode = 2
+justification_flags = 161
+
+[node name="TrashSlotContainer" type="PanelContainer" parent="TextureRect"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_left = 608.5
+offset_top = 330.0
+offset_right = 668.5
+offset_bottom = 390.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_1bmui")
+
+[node name="TrashSlot" type="Panel" parent="TextureRect/TrashSlotContainer" groups=["slots"]]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_n5btx")
+script = ExtResource("3_f47to")

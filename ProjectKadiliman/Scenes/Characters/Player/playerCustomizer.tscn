@@ -1,12 +1,14 @@
-[gd_scene load_steps=30 format=3 uid="uid://rewc5j8f4xeh"]
+[gd_scene load_steps=32 format=3 uid="uid://rewc5j8f4xeh"]
 
 [ext_resource type="Script" uid="uid://bsaylpwsh04s1" path="res://Scripts/Characters/Player/PlayerCustomizer.gd" id="1_q3w74"]
 [ext_resource type="Texture2D" uid="uid://buad2iyji2fhl" path="res://Assets/Characters/Player/CompositeSpriteMale/Body/1_universal.png" id="2_mtuho"]
-[ext_resource type="Texture2D" uid="uid://bgxg1orsd08ja" path="res://Assets/Characters/Player/CompositeSpriteMale/Hair/1_universal.png" id="3_n8qhv"]
+[ext_resource type="Texture2D" uid="uid://bgxg1orsd08ja" path="res://Assets/Characters/Player/CompositeSpriteMale/Dummy/1_universal.png" id="3_n8qhv"]
 [ext_resource type="Texture2D" uid="uid://c48jqoiwcpw47" path="res://Assets/Characters/Player/CompositeSpriteMale/Pants/1_universal.png" id="4_usvea"]
 [ext_resource type="Texture2D" uid="uid://b5x5d423272yu" path="res://Assets/Characters/Player/CompositeSpriteMale/Shirts/1_universal.png" id="5_demym"]
 [ext_resource type="Texture2D" uid="uid://c8k8a8tbudc3e" path="res://Assets/Characters/Player/CompositeSpriteMale/Shoes/1_universal.png" id="6_7qjvd"]
-[ext_resource type="Texture2D" uid="uid://b3s7itblu3kv7" path="res://Assets/Characters/Player/MainHand/watering_can_universal.png" id="7_xrx2y"]
+[ext_resource type="FontFile" uid="uid://c7gdnqh81ufha" path="res://Assets/Environment/UI/Fonts/PixelOperator8-Bold.ttf" id="7_n8qhv"]
+[ext_resource type="FontFile" uid="uid://dyfa1huwomox3" path="res://Assets/Environment/UI/Fonts/baybayin-pixel-01.otf" id="8_mtuho"]
+[ext_resource type="Texture2D" uid="uid://c45p0umhhfcvx" path="res://Assets/Environment/UI/Inventory/Background/Inventory_Slot_Selected.png" id="8_usvea"]
 
 [sub_resource type="Animation" id="Animation_3brl3"]
 length = 0.001
@@ -1891,7 +1893,7 @@ grow_vertical = 2
 scale = Vector2(3, 3)
 mouse_filter = 2
 script = ExtResource("1_q3w74")
-sprite_scale = Vector2(1, 1)
+sprite_scale = Vector2(2.5, 2.5)
 can_customize = true
 
 [node name="Sprites" type="Control" parent="."]
@@ -1904,37 +1906,42 @@ scale = Vector2(0.5, 0.5)
 mouse_filter = 2
 
 [node name="Body" type="Sprite2D" parent="Sprites"]
+scale = Vector2(2, 2)
 texture = ExtResource("2_mtuho")
 hframes = 13
 vframes = 21
 frame = 79
 
 [node name="Hair" type="Sprite2D" parent="Sprites"]
+scale = Vector2(2, 2)
 texture = ExtResource("3_n8qhv")
 hframes = 13
 vframes = 21
 frame = 79
 
 [node name="Pants" type="Sprite2D" parent="Sprites"]
+scale = Vector2(2, 2)
 texture = ExtResource("4_usvea")
 hframes = 13
 vframes = 21
 frame = 79
 
 [node name="Shirts" type="Sprite2D" parent="Sprites"]
+scale = Vector2(2, 2)
 texture = ExtResource("5_demym")
 hframes = 13
 vframes = 21
 frame = 79
 
 [node name="Shoes" type="Sprite2D" parent="Sprites"]
+scale = Vector2(2, 2)
 texture = ExtResource("6_7qjvd")
 hframes = 13
 vframes = 21
 frame = 79
 
 [node name="MainHand" type="Sprite2D" parent="Sprites"]
-texture = ExtResource("7_xrx2y")
+scale = Vector2(2, 2)
 hframes = 13
 vframes = 21
 frame = 79
@@ -1950,10 +1957,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -170.667
-offset_top = -89.3333
-offset_right = 170.333
-offset_bottom = 83.6667
+offset_left = -171.0
+offset_top = -89.0
+offset_right = 170.0
+offset_bottom = 84.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -1967,13 +1974,31 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -154.667
-offset_top = -55.9999
-offset_right = -107.667
-offset_bottom = -24.9999
+offset_left = -154.5
+offset_top = -56.0
+offset_right = -106.5
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
 text = "Body"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/ChangeBody"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
 
 [node name="ChangeHair" type="Button" parent="Customizer"]
 layout_mode = 1
@@ -1988,7 +2013,25 @@ offset_right = -49.6667
 offset_bottom = -24.9999
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
 text = "Hair"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/ChangeHair"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
 
 [node name="ChangeShirts" type="Button" parent="Customizer"]
 layout_mode = 1
@@ -2003,7 +2046,25 @@ offset_right = 26.3327
 offset_bottom = -24.9999
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
 text = "Shirts"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/ChangeShirts"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
 
 [node name="ChangePants" type="Button" parent="Customizer"]
 layout_mode = 1
@@ -2018,7 +2079,25 @@ offset_right = 89.3333
 offset_bottom = -24.9999
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
 text = "Pants"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/ChangePants"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
 
 [node name="ChangeShoes" type="Button" parent="Customizer"]
 layout_mode = 1
@@ -2033,7 +2112,25 @@ offset_right = 155.333
 offset_bottom = -24.9999
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
 text = "Shoes"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/ChangeShoes"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
 
 [node name="ChangeSex" type="Button" parent="Customizer"]
 layout_mode = 1
@@ -2048,7 +2145,25 @@ offset_right = -119.667
 offset_bottom = -88.9999
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
 text = "Sex"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/ChangeSex"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
 
 [node name="RandomizeButton" type="Button" parent="Customizer"]
 layout_mode = 1
@@ -2063,7 +2178,25 @@ offset_right = 92.3333
 offset_bottom = -88.9999
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
 text = "Randomize"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/RandomizeButton"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
 
 [node name="FinishedCustomization" type="Button" parent="Customizer"]
 layout_mode = 1
@@ -2078,7 +2211,63 @@ offset_right = 155.333
 offset_bottom = -89.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
 text = "Finish"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/FinishedCustomization"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
+
+[node name="ChangeHairColor" type="Button" parent="Customizer"]
+layout_mode = 0
+offset_left = 58.667
+offset_top = 152.0
+offset_right = 144.667
+offset_bottom = 183.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_n8qhv")
+theme_override_font_sizes/font_size = 8
+text = "Color"
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="Customizer/ChangeHairColor"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_usvea")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Customizer"]
+layout_mode = 0
+offset_left = -0.332989
+offset_top = 2.33329
+offset_right = 341.667
+offset_bottom = 50.3333
+theme_override_fonts/font = ExtResource("8_mtuho")
+theme_override_font_sizes/font_size = 32
+text = "KADILIMIMAN"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="animation_finished" from="PlayerAnimation" to="." method="_on_player_animation_animation_finished"]
 [connection signal="pressed" from="Customizer/ChangeBody" to="." method="_on_change_body_pressed"]
@@ -2089,3 +2278,4 @@ text = "Finish"
 [connection signal="pressed" from="Customizer/ChangeSex" to="." method="_on_change_sex_pressed"]
 [connection signal="pressed" from="Customizer/RandomizeButton" to="." method="_on_randomize_button_pressed"]
 [connection signal="pressed" from="Customizer/FinishedCustomization" to="." method="_on_finish_customization_pressed"]
+[connection signal="pressed" from="Customizer/ChangeHairColor" to="." method="_on_change_hair_color_pressed"]

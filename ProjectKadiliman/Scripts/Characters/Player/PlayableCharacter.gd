@@ -8,10 +8,12 @@ extends CharacterBody2D
 @onready var main_hand: Sprite2D = $Sprites/MainHand
 @onready var anim: AnimationPlayer = $PlayerAnimation
 
+@onready var picked_item_container: VBoxContainer = $PickedItemLabel/VBoxContainer
 @onready var PickupZone: Area2D = $PickupZone
+@onready var trash_slot: PanelContainer = $UserInterface/Inventory/TrashSlot
 
-@export var movement_speed: float = 80.0
-@export var run_speed: float = 150.0
+@export var movement_speed: float = 60.0
+@export var run_speed: float = 100.0
 
 var current_speed: float = 80.0
 var is_moving: bool = false
@@ -26,6 +28,15 @@ var arrow_ammo_scene = preload("res://Scenes/Characters/Projectiles/ArrowAmmo.ts
 # Store the target position for the projectile (captured at animation start)
 var projectile_target_position: Vector2 = Vector2.ZERO
 
+# Item pickup announcement system
+var active_pickup_labels: Array = []  # Track currently displayed labels
+var max_displayed_items: int = 3      # Maximum number of items to show
+var pickup_timers: Dictionary = {}    # Track timers for each label
+
+# NEW: Inventory full announcement
+var inventory_full_label: Control = null
+var inventory_full_timer: Timer = null
+
 @onready var inventory: Control = $UserInterface/Inventory
 
 func _ready() -> void:
@@ -39,6 +50,214 @@ func _ready() -> void:
 	
 	update_equipment_display()
 
+# NEW: Function to announce inventory full
+func announce_inventory_full():
+	print("Inventory is full! Cannot pick up item.")
+	
+	# Create or update inventory full label
+	if not inventory_full_label:
+		create_inventory_full_label()
+	else:
+		reset_inventory_full_timer()
+	
+	# Show the label
+	inventory_full_label.visible = true
+	inventory_full_label.modulate.a = 1.0
+
+# NEW: Create inventory full label
+func create_inventory_full_label():
+	var pickup_label_scene = preload("res://Scenes/World/Environment/Item/PickupLabel.tscn")
+	inventory_full_label = pickup_label_scene.instantiate()
+	
+	# Set the text and color (red for warning)
+	inventory_full_label.get_node("ItemName").text = "Inventory Full!"
+	inventory_full_label.get_node("ItemName").modulate = Color.RED
+	
+	# Add to container
+	picked_item_container.add_child(inventory_full_label)
+	
+	# Start timer
+	start_inventory_full_timer()
+
+# NEW: Start timer for inventory full message
+func start_inventory_full_timer():
+	if inventory_full_timer and inventory_full_timer.is_inside_tree():
+		inventory_full_timer.queue_free()
+	
+	inventory_full_timer = Timer.new()
+	inventory_full_timer.wait_time = 2.0  # 2 seconds for warning message
+	inventory_full_timer.one_shot = true
+	add_child(inventory_full_timer)
+	
+	inventory_full_timer.timeout.connect(_on_inventory_full_timeout)
+	inventory_full_timer.start()
+
+# NEW: Reset the inventory full timer
+func reset_inventory_full_timer():
+	if inventory_full_timer:
+		inventory_full_timer.start()
+
+# NEW: Handle inventory full timeout
+func _on_inventory_full_timeout():
+	if inventory_full_label:
+		# Fade out the label
+		var tween = create_tween()
+		tween.tween_property(inventory_full_label, "modulate:a", 0.0, 0.5)
+		tween.tween_callback(hide_inventory_full_label)
+
+# NEW: Hide inventory full label
+func hide_inventory_full_label():
+	if inventory_full_label:
+		inventory_full_label.visible = false
+		inventory_full_label.modulate.a = 0.0
+
+# NEW: Function to announce picked up items
+func announce_item_pickup(item_name: String, quantity: int):
+	print("Announcing item pickup: ", item_name, " x", quantity)
+	
+	# Check if we already have a label for this item
+	var existing_label = find_existing_label(item_name)
+	
+	if existing_label:
+		# Update existing label with new quantity
+		update_existing_label(existing_label, item_name, quantity)
+	else:
+		# Create new label
+		create_new_label(item_name, quantity)
+	
+	# Ensure we don't exceed the maximum displayed items
+	cleanup_old_labels()
+
+# Find if we already have a label for this item type
+func find_existing_label(item_name: String) -> Control:
+	for label_data in active_pickup_labels:
+		if label_data["item_name"] == item_name:
+			return label_data["label"]
+	return null
+
+# Update an existing label with new quantity
+func update_existing_label(label: Control, item_name: String, additional_quantity: int):
+	# Find the label data
+	var label_data = null
+	for data in active_pickup_labels:
+		if data["label"] == label:
+			label_data = data
+			break
+	
+	if label_data:
+		# Update the quantity
+		label_data["quantity"] += additional_quantity
+		
+		# Update the label text WITH "+" sign
+		if label_data["quantity"] > 1:
+			label.get_node("ItemName").text = "+%s x%d" % [item_name, label_data["quantity"]]
+		else:
+			label.get_node("ItemName").text = "+" + item_name
+		
+		# Reset the timer for this label
+		reset_label_timer(label_data)
+		
+		# Move to top (most recent)
+		move_label_to_top(label)
+
+# Create a new label for the item
+func create_new_label(item_name: String, quantity: int):
+	var pickup_label_scene = preload("res://Scenes/World/Environment/Item/PickupLabel.tscn")
+	var new_label = pickup_label_scene.instantiate()
+	
+	# Set the text
+	if quantity > 1:
+		new_label.get_node("ItemName").text = "+%s x%d" % [item_name, quantity]
+	else:
+		new_label.get_node("ItemName").text = "+" + item_name
+	
+	# Add to container at the bottom
+	picked_item_container.add_child(new_label)
+	
+	# Create label data
+	var label_data = {
+		"label": new_label,
+		"item_name": item_name,
+		"quantity": quantity,
+		"timer": null
+	}
+	
+	# Add to active labels
+	active_pickup_labels.append(label_data)
+	
+	# Start fade timer for this label
+	start_label_timer(label_data)
+	
+	# Move to top (most recent)
+	move_label_to_top(new_label)
+
+# Move a label to the top (most recent position)
+func move_label_to_top(label: Control):
+	# Remove from current position
+	picked_item_container.remove_child(label)
+	# Add back at the top (bottom of array = top visually)
+	picked_item_container.add_child(label)
+
+# Start the fade timer for a label
+func start_label_timer(label_data: Dictionary):
+	# Remove existing timer if any
+	if label_data["timer"] and label_data["timer"].is_inside_tree():
+		label_data["timer"].queue_free()
+	
+	# Create new timer
+	var timer = Timer.new()
+	timer.wait_time = 3.0  # 3 seconds before fading
+	timer.one_shot = true
+	add_child(timer)
+	
+	timer.timeout.connect(_on_pickup_label_timeout.bind(label_data))
+	timer.start()
+	
+	label_data["timer"] = timer
+
+# Reset the timer for an existing label
+func reset_label_timer(label_data: Dictionary):
+	if label_data["timer"]:
+		label_data["timer"].start()
+
+# Timer timeout - fade out the label
+func _on_pickup_label_timeout(label_data: Dictionary):
+	var label = label_data["label"]
+	
+	# Create fade animation
+	var tween = create_tween()
+	tween.tween_property(label, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(remove_pickup_label.bind(label_data))
+
+# Remove a pickup label completely
+func remove_pickup_label(label_data: Dictionary):
+	var label = label_data["label"]
+	
+	# Remove from active labels
+	var index = -1
+	for i in range(active_pickup_labels.size()):
+		if active_pickup_labels[i]["label"] == label:
+			index = i
+			break
+	
+	if index != -1:
+		active_pickup_labels.remove_at(index)
+	
+	# Remove timer if it exists
+	if label_data["timer"] and label_data["timer"].is_inside_tree():
+		label_data["timer"].queue_free()
+	
+	# Remove the label
+	if label and label.is_inside_tree():
+		label.queue_free()
+
+# Clean up old labels if we exceed the maximum
+func cleanup_old_labels():
+	if active_pickup_labels.size() > max_displayed_items:
+		# Remove the oldest one (first in array)
+		var oldest_label = active_pickup_labels[0]
+		remove_pickup_label(oldest_label)
+
 func _on_active_item_updated():
 	# Update equipment display when hotbar selection changes
 	update_equipment_display()
@@ -48,21 +267,20 @@ func _on_hotbar_updated():
 	update_equipment_display()
 
 func _on_player_animation_animation_finished(anim_name: StringName) -> void:
-	if anim_name.begins_with("use_range_weapon_"):
+	if anim_name.begins_with("use_range_weapon_") or anim_name.begins_with("use_tool_") or anim_name.begins_with("use_weapon_"):
 		is_using_item = false
-		spawn_projectile()
-	elif anim_name.begins_with("use_tool_"):
-		is_using_item = false
-		# Check if this is actually Cross Bow using tool animation
-		var active_item = get_active_hotbar_item()
-		var range_weapon_name = active_item if active_item else PlayerCharacterData.player_character_data.current_range_weapon
 		
-		if range_weapon_name == "Cross Bow":
-			spawn_projectile()  # Cross Bow uses tool animation but spawns projectile
-		else:
-			perform_tool_action()  # Regular tools perform tool actions
-	elif anim_name.begins_with("use_weapon_"):
-		is_using_item = false
+		# Handle specific animation types
+		if anim_name.begins_with("use_range_weapon_"):
+			spawn_projectile()
+		elif anim_name.begins_with("use_tool_"):
+			var active_item = get_active_hotbar_item()
+			var range_weapon_name = active_item if active_item else PlayerCharacterData.player_character_data.current_range_weapon
+			
+			if range_weapon_name == "Cross Bow":
+				spawn_projectile()
+			else:
+				perform_tool_action()
 
 func apply_character_data(data: Dictionary) -> void:
 	if PlayerCharacterData.validate_data(data):
@@ -87,10 +305,24 @@ func update_equipment_display():
 		update_main_hand_texture(active_item)
 	else:
 		# Fall back to equipped items from PlayerCharacterData
-		var sprites = {
-			"main_hand": main_hand
-		}
-		CharacterUtils.update_sprites(PlayerCharacterData.player_character_data, sprites)
+		update_main_hand_from_equipped()
+
+func update_main_hand_from_equipped():
+	if not main_hand:
+		return
+	
+	var data = PlayerCharacterData.player_character_data
+	var texture = null
+	
+	# Use the same priority logic as use_equipped_item()
+	if data.current_range_weapon != "none":
+		texture = CompositeSprites.get_range_weapon_texture(data.current_range_weapon)
+	elif data.current_weapon != "none":
+		texture = CompositeSprites.get_weapon_texture(data.current_weapon)
+	elif data.current_tool != "none":
+		texture = CompositeSprites.get_tool_texture(data.current_tool)
+	
+	main_hand.texture = texture
 
 func update_main_hand_texture(item_name: String):
 	if not main_hand:
@@ -168,28 +400,45 @@ func use_active_item(item_name: String) -> void:
 			return
 
 func use_equipped_item() -> void:
+	if is_using_item:
+		return
+	
 	var data = PlayerCharacterData.player_character_data
 	
-	# Check ammo availability for range weapons
-	if data.current_range_weapon != "none":
-		if data.current_range_weapon == "Slingshot" and not PlayerCharacterData.has_item_in_inventory("Peeble"):
-			print("No peeble ammo available!")
-			return
-		elif data.current_range_weapon == "Cross Bow" and not PlayerCharacterData.has_item_in_inventory("Arrow"):
-			print("No Arrow ammo available!")
-			return
+	# Update direction based on mouse position
+	update_direction_from_mouse()
 	
-	# Update direction based on mouse position for relevant items
-	if data.current_range_weapon != "none" or data.current_tool != "none" or data.current_weapon != "none":
-		update_direction_from_mouse()
-	
-	# Priority logic with proper category handling
+	# Check ammo for range weapons first using new inventory functions
 	if data.current_range_weapon != "none":
+		var ammo_type = get_ammo_type_for_weapon(data.current_range_weapon)
+		if ammo_type and not PlayerInventory.has_item(ammo_type):
+			print("No %s ammo available for %s!" % [ammo_type, data.current_range_weapon])
+			return
+		
 		use_range_weapon(data.current_range_weapon)
-	elif data.current_tool != "none":
+		return
+	
+	# Then check for tools
+	if data.current_tool != "none":
 		use_tool(data.current_tool)
-	elif data.current_weapon != "none":
+		return
+	
+	# Finally check for weapons
+	if data.current_weapon != "none":
 		use_weapon(data.current_weapon)
+		return
+	
+	print("No equipped item to use")
+
+# NEW: Helper function to get ammo type for weapons
+func get_ammo_type_for_weapon(weapon_name: String) -> String:
+	match weapon_name:
+		"Slingshot":
+			return "Peeble"
+		"Cross Bow":
+			return "Arrow"
+		_:
+			return ""
 
 func update_direction_from_mouse() -> void:
 	var mouse_pos = get_global_mouse_position()
@@ -246,18 +495,23 @@ func spawn_projectile():
 	var range_weapon_name = active_item if active_item else PlayerCharacterData.player_character_data.current_range_weapon
 	
 	var projectile_scene = null
+	var ammo_type = get_ammo_type_for_weapon(range_weapon_name)
 	
 	match range_weapon_name:
 		"Slingshot":
 			projectile_scene = peeble_ammo_scene
 			print("Firing slingshot with peeble")
-			consume_ammo("Peeble", 1)
 		"Cross Bow":
 			projectile_scene = arrow_ammo_scene
 			print("Firing cross bow with arrow")
-			consume_ammo("Arrow", 1)
 		_:
 			print("No projectile defined for: ", range_weapon_name)
+			return
+	
+	# Consume ammo using the new inventory function
+	if ammo_type and PlayerInventory:
+		if not PlayerInventory.consume_item(ammo_type, 1):
+			print("Failed to consume ammo: ", ammo_type)
 			return
 	
 	if projectile_scene:
@@ -277,24 +531,7 @@ func spawn_projectile():
 		
 		get_parent().add_child(projectile)
 
-# Consume ammo from inventory
-func consume_ammo(ammo_name: String, quantity: int):
-	if PlayerInventory:
-		# Find ammo in hotbar first, then inventory
-		for slot_index in PlayerInventory.hotbar:
-			if PlayerInventory.hotbar[slot_index][0] == ammo_name:
-				PlayerInventory.hotbar[slot_index][1] -= quantity
-				if PlayerInventory.hotbar[slot_index][1] <= 0:
-					PlayerInventory.hotbar.erase(slot_index)
-				PlayerInventory.hotbar_updated.emit()
-				return
-		
-		for slot_index in PlayerInventory.inventory:
-			if PlayerInventory.inventory[slot_index][0] == ammo_name:
-				PlayerInventory.inventory[slot_index][1] -= quantity
-				if PlayerInventory.inventory[slot_index][1] <= 0:
-					PlayerInventory.inventory.erase(slot_index)
-				return
+# UPDATED: Remove old consume_ammo function since we're now using PlayerInventory.consume_item()
 
 func perform_tool_action():
 	var active_item = get_active_hotbar_item()

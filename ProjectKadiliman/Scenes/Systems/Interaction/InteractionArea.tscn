@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cduogrrnni8p7"]
+
+[ext_resource type="Script" uid="uid://td6oyt3ug7u1" path="res://Scripts/World/Environment/Interaction/InteractionArea.gd" id="1_o86g5"]
+
+[node name="InteractionArea" type="Area2D"]
+script = ExtResource("1_o86g5")
+
+[connection signal="input_event" from="." to="." method="_on_interaction_area_input_event"]

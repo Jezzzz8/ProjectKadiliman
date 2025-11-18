@@ -6,20 +6,33 @@ static func update_sprites(data: Dictionary, sprites: Dictionary) -> void:
 		push_error("Invalid character data")
 		return
 	
+	var is_female = data.is_female
+	
 	for sprite_name in sprites:
 		var sprite = sprites[sprite_name]
 		if sprite and sprite is Sprite2D:
 			match sprite_name:
 				"body":
-					sprite.texture = CompositeSprites.get_body_spritesheet(data.is_female).get(data.body)
+					sprite.texture = CompositeSprites.get_body_spritesheet(is_female).get(data.body)
 				"hair":
-					sprite.texture = CompositeSprites.get_hair_spritesheet(data.is_female).get(data.hair)
+					# Use the hair color system
+					var hair_texture = CompositeSprites.get_hair_texture(data.hair + 1, data.hair_color, is_female)
+					sprite.texture = hair_texture
 				"pants":
-					sprite.texture = CompositeSprites.get_pants_spritesheet(data.is_female).get(data.pants)
+					var pants_spritesheet = CompositeSprites.get_pants_spritesheet(is_female)
+					var pants_keys = pants_spritesheet.keys()
+					if data.pants < pants_keys.size():
+						sprite.texture = pants_spritesheet[pants_keys[data.pants]]
 				"shirts":
-					sprite.texture = CompositeSprites.get_shirts_spritesheet(data.is_female).get(data.shirts)
+					var shirts_spritesheet = CompositeSprites.get_shirts_spritesheet(is_female)
+					var shirts_keys = shirts_spritesheet.keys()
+					if data.shirts < shirts_keys.size():
+						sprite.texture = shirts_spritesheet[shirts_keys[data.shirts]]
 				"shoes":
-					sprite.texture = CompositeSprites.get_shoes_spritesheet(data.is_female).get(data.shoes)
+					var shoes_spritesheet = CompositeSprites.get_shoes_spritesheet(is_female)
+					var shoes_keys = shoes_spritesheet.keys()
+					if data.shoes < shoes_keys.size():
+						sprite.texture = shoes_spritesheet[shoes_keys[data.shoes]]
 				"main_hand":
 					sprite.texture = PlayerCharacterData.get_current_equipment_texture()
 
@@ -32,10 +45,8 @@ static func update_direction(input_vector: Vector2) -> String:
 	return "down"  # default direction
 
 static func get_animation_name(last_direction: String, is_moving: bool, is_running: bool = false, is_using_equipment: bool = false) -> String:
-	if is_using_equipment:
-		# This is a generic placeholder - the actual animation is handled in PlayableCharacter
-		return "idle_" + last_direction
-	elif not is_moving:
+	# Don't override specific use animations - let PlayableCharacter handle them
+	if not is_moving:
 		return "idle_" + last_direction
 	else:
 		var prefix = "run_" if is_running else "walk_"

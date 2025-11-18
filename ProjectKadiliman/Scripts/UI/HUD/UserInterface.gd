@@ -1,51 +1,77 @@
 extends CanvasLayer
 
-func _input(event):
+@onready var inventory: Control = $Inventory
+@onready var hotbar: Control = $Hotbar
+@onready var inventory_open: Button = $Hotbar/InventoryOpen
+@onready var inventory_close: Button = $Inventory/InventoryClose
+
+# Hotkey actions mapped to slot indices
+const HOTKEY_ACTIONS := {
+	"hotbar_1": 0, "hotbar_2": 1, "hotbar_3": 2, "hotbar_4": 3, "hotbar_5": 4,
+	"hotbar_6": 5, "hotbar_7": 6, "hotbar_8": 7, "hotbar_9": 8, "hotbar_0": 9
+}
+
+func _ready() -> void:
+	# Connect button signals
+	inventory_open.pressed.connect(_on_inventory_open_pressed)
+	inventory_close.pressed.connect(_on_inventory_close_pressed)
+	
+	# Ensure initial state
+	inventory.visible = false
+	hotbar.visible = true
+
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory"):
-		if $Inventory.visible:
-			# Clear any selection before closing
-			if $Inventory.has_method("clear_selection"):
-				$Inventory.clear_selection()
-			$Inventory.visible = false
-			$Hotbar.visible = true
-			get_tree().call_group("hotbar", "refresh_hotbar")
-		else:
-			$Inventory.visible = true
-			$Hotbar.visible = false
-			$Inventory.initialize_inventory()
-			$Inventory.initialize_equips()
+		toggle_inventory()
+		get_viewport().set_input_as_handled()
+		return
 	
 	# Only process hotbar inputs if inventory is NOT visible
-	if not $Inventory.visible:
-		if event.is_action_pressed("scroll_up"):
-			PlayerInventory.active_item_scroll_down()
-		elif event.is_action_pressed("scroll_down"):
-			PlayerInventory.active_item_scroll_up()
-		elif event.is_action_pressed("hotbar_1"):
-			toggle_hotbar_slot(0)
-		elif event.is_action_pressed("hotbar_2"):
-			toggle_hotbar_slot(1)
-		elif event.is_action_pressed("hotbar_3"):
-			toggle_hotbar_slot(2)
-		elif event.is_action_pressed("hotbar_4"):
-			toggle_hotbar_slot(3)
-		elif event.is_action_pressed("hotbar_5"):
-			toggle_hotbar_slot(4)
-		elif event.is_action_pressed("hotbar_6"):
-			toggle_hotbar_slot(5)
-		elif event.is_action_pressed("hotbar_7"):
-			toggle_hotbar_slot(6)
-		elif event.is_action_pressed("hotbar_8"):
-			toggle_hotbar_slot(7)
-		elif event.is_action_pressed("hotbar_9"):
-			toggle_hotbar_slot(8)
-		elif event.is_action_pressed("hotbar_0"):
-			toggle_hotbar_slot(9)
+	if not inventory.visible:
+		_process_hotbar_input(event)
 
-func toggle_hotbar_slot(slot_index: int):
-	var hotbar = $Hotbar
+func _process_hotbar_input(event: InputEvent) -> void:
+	if event.is_action_pressed("scroll_up"):
+		PlayerInventory.active_item_scroll_down()
+	elif event.is_action_pressed("scroll_down"):
+		PlayerInventory.active_item_scroll_up()
+	else:
+		# Check for hotkey inputs
+		for action in HOTKEY_ACTIONS:
+			if event.is_action_pressed(action):
+				toggle_hotbar_slot(HOTKEY_ACTIONS[action])
+				break
+
+func toggle_inventory() -> void:
+	if inventory.visible:
+		close_inventory()
+	else:
+		open_inventory()
+
+func open_inventory() -> void:
+	inventory.visible = true
+	hotbar.visible = false
+	
+	if inventory.has_method("initialize_inventory"):
+		inventory.initialize_inventory()
+	if inventory.has_method("initialize_equips"):
+		inventory.initialize_equips()
+
+func close_inventory() -> void:
+	# Clear any selection before closing
+	if inventory.has_method("clear_selection"):
+		inventory.clear_selection()
+	
+	inventory.visible = false
+	hotbar.visible = true
+	get_tree().call_group("hotbar", "refresh_hotbar")
+
+func toggle_hotbar_slot(slot_index: int) -> void:
 	if hotbar and hotbar.has_method("select_slot"):
 		hotbar.select_slot(slot_index)
 
-func _ready():
-	pass
+func _on_inventory_open_pressed() -> void:
+	open_inventory()
+
+func _on_inventory_close_pressed() -> void:
+	close_inventory()

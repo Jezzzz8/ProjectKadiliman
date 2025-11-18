@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://51xhcym5smwh"]
+
+[ext_resource type="Script" uid="uid://dv43vs5ifocco" path="res://Scripts/World/Buildings/ChickenCoop.gd" id="1_5b31j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5b31j"]
+size = Vector2(293, 192)
+
+[node name="ChickenCoop" type="Area2D" groups=["enclosures"]]
+script = ExtResource("1_5b31j")
+metadata/_custom_type_script = "uid://dlt0y83hpcall"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5b31j")

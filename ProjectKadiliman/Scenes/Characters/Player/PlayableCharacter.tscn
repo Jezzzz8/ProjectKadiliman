@@ -1,103 +1,21 @@
-[gd_scene load_steps=36 format=3 uid="uid://c50dntq6c8270"]
+[gd_scene load_steps=45 format=3 uid="uid://c50dntq6c8270"]
 
 [ext_resource type="Script" uid="uid://b64onpes4w1uv" path="res://Scripts/Characters/Player/PlayableCharacter.gd" id="1_82j7n"]
 [ext_resource type="Texture2D" uid="uid://buad2iyji2fhl" path="res://Assets/Characters/Player/CompositeSpriteMale/Body/1_universal.png" id="2_82j7n"]
-[ext_resource type="Texture2D" uid="uid://bgxg1orsd08ja" path="res://Assets/Characters/Player/CompositeSpriteMale/Hair/1_universal.png" id="3_4fpeb"]
+[ext_resource type="Texture2D" uid="uid://bgxg1orsd08ja" path="res://Assets/Characters/Player/CompositeSpriteMale/Dummy/1_universal.png" id="3_4fpeb"]
 [ext_resource type="Texture2D" uid="uid://c48jqoiwcpw47" path="res://Assets/Characters/Player/CompositeSpriteMale/Pants/1_universal.png" id="4_13338"]
 [ext_resource type="Texture2D" uid="uid://b5x5d423272yu" path="res://Assets/Characters/Player/CompositeSpriteMale/Shirts/1_universal.png" id="5_p6mx2"]
 [ext_resource type="Texture2D" uid="uid://c8k8a8tbudc3e" path="res://Assets/Characters/Player/CompositeSpriteMale/Shoes/1_universal.png" id="6_ytafg"]
-[ext_resource type="Texture2D" uid="uid://4xiu5qmwcgpb" path="res://Assets/Characters/Player/MainHand/slingshot_universal.png" id="7_p6mx2"]
+[ext_resource type="Texture2D" uid="uid://b3s7itblu3kv7" path="res://Assets/Characters/Player/MainHand/watering_can_universal.png" id="7_loifk"]
 [ext_resource type="Script" uid="uid://dv1pilbjs2hli" path="res://Scripts/Characters/Player/PickupZone.gd" id="8_plar0"]
 [ext_resource type="Script" uid="uid://bm051cmu4slf6" path="res://Scripts/UI/HUD/UserInterface.gd" id="9_7xd84"]
 [ext_resource type="PackedScene" uid="uid://hdwgex378b5p" path="res://Scenes/Systems/Inventory/Inventory.tscn" id="10_xjs3c"]
+[ext_resource type="Texture2D" uid="uid://bp3sy83cd386e" path="res://Assets/Environment/UI/Inventory/Background/InventoryButton.png" id="11_62m7u"]
 [ext_resource type="PackedScene" uid="uid://bx22uqagqed5p" path="res://Scenes/Systems/Inventory/Hotbar.tscn" id="11_xjs3c"]
+[ext_resource type="Texture2D" uid="uid://bkunn8eiespm0" path="res://Assets/Environment/UI/Icons/inventory_icon.png" id="13_loifk"]
+[ext_resource type="Texture2D" uid="uid://c45p0umhhfcvx" path="res://Assets/Environment/UI/Inventory/Background/Inventory_Slot_Selected.png" id="13_nmp55"]
 
-[sub_resource type="Animation" id="Animation_3brl3"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprites/Body:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(1, 6)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprites/Hair:frame_coords")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(1, 6)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprites/Pants:frame_coords")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(1, 6)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprites/Shirts:frame_coords")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(1, 6)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sprites/Shoes:frame_coords")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(1, 6)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Sprites/MainHand:frame_coords")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(1, 6)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Sprites/MainHand:show_behind_parent")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
+[sub_resource type="Animation" id="Animation_loifk"]
 
 [sub_resource type="Animation" id="Animation_4fpeb"]
 resource_name = "idle_down"
@@ -1860,7 +1778,7 @@ tracks/6/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4fpeb"]
 _data = {
-&"RESET": SubResource("Animation_3brl3"),
+&"RESET": SubResource("Animation_loifk"),
 &"idle_down": SubResource("Animation_4fpeb"),
 &"idle_left": SubResource("Animation_13338"),
 &"idle_right": SubResource("Animation_qo27b"),
@@ -1884,61 +1802,82 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p6mx2"]
-radius = 8.0
+radius = 9.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mi0uv"]
 radius = 32.9848
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n5c20"]
+texture = ExtResource("13_nmp55")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nmp55"]
+texture = ExtResource("13_nmp55")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_loifk"]
+texture = ExtResource("11_62m7u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_equfm"]
+texture = ExtResource("13_nmp55")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y5dqe"]
+texture = ExtResource("13_nmp55")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p0oi6"]
+texture = ExtResource("11_62m7u")
+
 [node name="PlayableCharacter" type="CharacterBody2D" groups=["player"]]
-collision_mask = 4
+y_sort_enabled = true
+collision_mask = 120
+motion_mode = 1
 script = ExtResource("1_82j7n")
 
 [node name="Sprites" type="Node2D" parent="."]
-position = Vector2(0, -24)
+position = Vector2(0, -18)
 
 [node name="Body" type="Sprite2D" parent="Sprites"]
 texture = ExtResource("2_82j7n")
 hframes = 13
 vframes = 21
-frame = 79
+frame = 130
 
 [node name="Hair" type="Sprite2D" parent="Sprites"]
 texture = ExtResource("3_4fpeb")
 hframes = 13
 vframes = 21
-frame = 79
+frame = 130
 
 [node name="Pants" type="Sprite2D" parent="Sprites"]
 texture = ExtResource("4_13338")
 hframes = 13
 vframes = 21
-frame = 79
+frame = 130
 
 [node name="Shirts" type="Sprite2D" parent="Sprites"]
 texture = ExtResource("5_p6mx2")
 hframes = 13
 vframes = 21
-frame = 79
+frame = 130
 
 [node name="Shoes" type="Sprite2D" parent="Sprites"]
 texture = ExtResource("6_ytafg")
 hframes = 13
 vframes = 21
-frame = 79
+frame = 130
 
 [node name="MainHand" type="Sprite2D" parent="Sprites"]
-texture = ExtResource("7_p6mx2")
+texture = ExtResource("7_loifk")
 hframes = 13
 vframes = 21
-frame = 79
+frame = 130
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_4fpeb")
 }
-autoplay = "PlayerAnimation/idle_down"
+autoplay = "idle_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_p6mx2")
 
 [node name="PickupZone" type="Area2D" parent="."]
@@ -1948,13 +1887,92 @@ script = ExtResource("8_plar0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupZone"]
 shape = SubResource("CircleShape2D_mi0uv")
 
+[node name="PickedItemLabel" type="Control" parent="."]
+z_index = 100
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = -38.0
+offset_right = 128.0
+offset_bottom = 26.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PickedItemLabel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -32.0
+offset_right = 56.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
 [node name="UserInterface" type="CanvasLayer" parent="."]
 script = ExtResource("9_7xd84")
 
 [node name="Inventory" parent="UserInterface" instance=ExtResource("10_xjs3c")]
-visible = false
+
+[node name="InventoryClose" type="Button" parent="UserInterface/Inventory"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_left = 881.0
+offset_top = 138.0
+offset_right = 941.0
+offset_bottom = 198.0
+theme_override_styles/hover = SubResource("StyleBoxTexture_n5c20")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_nmp55")
+theme_override_styles/normal = SubResource("StyleBoxTexture_loifk")
+action_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="UserInterface/Inventory/InventoryClose"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_loifk")
+expand_mode = 1
 
 [node name="Hotbar" parent="UserInterface" instance=ExtResource("11_xjs3c")]
 
+[node name="InventoryOpen" type="Button" parent="UserInterface/Hotbar"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_left = 881.0
+offset_top = 18.0
+offset_right = 941.0
+offset_bottom = 78.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/hover = SubResource("StyleBoxTexture_equfm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_y5dqe")
+theme_override_styles/normal = SubResource("StyleBoxTexture_p0oi6")
+action_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="UserInterface/Hotbar/InventoryOpen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_loifk")
+expand_mode = 1
+
 [connection signal="animation_finished" from="PlayerAnimation" to="." method="_on_player_animation_animation_finished"]
 [connection signal="area_entered" from="PickupZone" to="PickupZone" method="_on_area_entered"]
+[connection signal="pressed" from="UserInterface/Inventory/InventoryClose" to="UserInterface" method="_on_inventory_close_pressed"]
+[connection signal="pressed" from="UserInterface/Hotbar/InventoryOpen" to="UserInterface" method="_on_inventory_open_pressed"]

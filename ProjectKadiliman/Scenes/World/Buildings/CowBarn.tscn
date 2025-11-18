@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://xx1i4sov10oo"]
+
+[ext_resource type="Script" uid="uid://brvhf7jw583nc" path="res://Scripts/World/Buildings/CowBarn.gd" id="1_fbocs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fbocs"]
+size = Vector2(293, 192)
+
+[node name="CowBarn" type="Area2D" groups=["enclosures"]]
+script = ExtResource("1_fbocs")
+metadata/_custom_type_script = "uid://dlt0y83hpcall"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fbocs")

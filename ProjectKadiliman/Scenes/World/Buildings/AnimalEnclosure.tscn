@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8r6mtyh3vjyg"]
+
+[ext_resource type="Script" uid="uid://dlt0y83hpcall" path="res://Scripts/World/Buildings/AnimalEnclosure.gd" id="1_irwey"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lrq72"]
+size = Vector2(293, 192)
+
+[node name="AnimalEnclosure" type="Area2D"]
+script = ExtResource("1_irwey")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lrq72")
+
+[connection signal="area_entered" from="." to="." method="_on_animal_entered"]
+[connection signal="area_exited" from="." to="." method="_on_animal_exited"]
