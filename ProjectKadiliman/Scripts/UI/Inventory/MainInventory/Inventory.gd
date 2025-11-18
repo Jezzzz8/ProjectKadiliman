@@ -447,7 +447,11 @@ func move_selected_item_to_slot(target_slot: SlotClass):
 			selected_item_description.text = "Swapping items..."
 			swap_items(source_slot, target_slot, source_item_data)
 
+# FIXED: Improved trash retrieval to handle swaps properly
 func handle_trash_retrieval(trash_slot: SlotClass, target_slot: SlotClass, source_item_data):
+	print("=== TRASH RETRIEVAL START ===")
+	print("Retrieving from trash: ", source_item_data.item_name, " to target: ", target_slot.slot_type)
+	
 	# Check if we can move the item to the target slot
 	var item_name = source_item_data.item_name
 	var item_category = JsonData.item_data[item_name]["ItemCategory"] if JsonData.item_data.has(item_name) else ""
@@ -457,16 +461,44 @@ func handle_trash_retrieval(trash_slot: SlotClass, target_slot: SlotClass, sourc
 		clear_selection()
 		return
 	
-	var item = trash_slot.item
-	trash_slot.pickFromSlot()
-	target_slot.putIntoSlot(item)
+	var trash_item = trash_slot.item
 	
-	PlayerInventory.remove_trash_item(trash_slot)
-	PlayerInventory.add_item_to_empty_slot(item, target_slot)
+	# Check if target slot has an item (swap scenario)
+	if target_slot.item:
+		print("Swap scenario: Trash item -> Target slot with item")
+		var target_item = target_slot.item
+		
+		# Remove both items from their current slots
+		trash_slot.pickFromSlot()
+		target_slot.pickFromSlot()
+		
+		# Put items into new slots
+		target_slot.putIntoSlot(trash_item)
+		trash_slot.putIntoSlot(target_item)
+		
+		# Update inventory data for swap
+		PlayerInventory.remove_trash_item(trash_slot)
+		PlayerInventory.add_item_to_empty_slot(trash_item, target_slot)
+		PlayerInventory.add_item_to_empty_slot(target_item, trash_slot)
+		
+		print("Swapped trash item with target slot item")
+	else:
+		print("Move scenario: Trash item -> Empty target slot")
+		# Simple move to empty slot
+		trash_slot.pickFromSlot()
+		target_slot.putIntoSlot(trash_item)
+		
+		PlayerInventory.remove_trash_item(trash_slot)
+		PlayerInventory.add_item_to_empty_slot(trash_item, target_slot)
 	
 	clear_selection()
+	trash_slot.force_visual_update()
+	target_slot.force_visual_update()
 	refresh_appropriate_displays(trash_slot, target_slot)
 	get_tree().call_group("hotbar", "refresh_hotbar")
+	
+	selected_item_description.text = "Item retrieved from trash: " + source_item_data.item_name
+	print("=== TRASH RETRIEVAL COMPLETE ===")
 
 func handle_trash_disposal(source_slot: SlotClass, trash_slot: SlotClass, source_item_data):
 	print("=== TRASH DISPOSAL START ===")
@@ -547,41 +579,6 @@ func delete_trash_item(trash_slot: SlotClass):
 		refresh_appropriate_displays(trash_slot, trash_slot)
 	else:
 		print("No item in trash slot to delete")
-
-#func spawn_item_drop(item_name: String, quantity: int):
-	#if item_name == "" or quantity <= 0:
-		#print("Warning: Trying to spawn invalid item drop - Name: ", item_name, " Quantity: ", quantity)
-		#return
-		#
-	#var player = get_tree().get_first_node_in_group("player")
-	#if player and ItemDropClass:
-		#print("Spawning item drop: ", item_name, " x", quantity)
-		#var item_drop = ItemDropClass.instantiate()
-		#
-		## Set item properties directly
-		#item_drop.item_name = item_name
-		#item_drop.item_quantity = quantity
-		#
-		## Spawn further away from player to prevent immediate pickup
-		#var direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
-		#var drop_offset = direction * 120  # Increased from 40 to 120 for more distance
-		#var drop_position = player.global_position + drop_offset
-		#
-		#item_drop.global_position = drop_position
-		#
-		## Add to current scene
-		#get_tree().current_scene.add_child(item_drop)
-		#print(item_name + " item drop spawned at: ", drop_position)
-		#
-		## Call update_sprite_texture to ensure the visual is updated
-		#if item_drop.has_method("update_sprite_texture"):
-			#item_drop.update_sprite_texture()
-			#
-		## NEW: Add a brief pickup cooldown to prevent immediate pickup
-		#if item_drop.has_method("set_pickup_cooldown"):
-			#item_drop.set_pickup_cooldown(1.0)  # 1 second cooldown
-	#else:
-		#print("Error: Could not spawn item drop - player or ItemDropClass not found")
 
 func move_to_empty_slot(source_slot: SlotClass, target_slot: SlotClass, source_item_data):
 	print("Moving to empty slot - Source: ", source_slot.slot_type, ", Target: ", target_slot.slot_type)

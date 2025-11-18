@@ -15,14 +15,6 @@ func _ready():
 	add_to_group("pickup_items")
 	area_entered.connect(_on_area_entered)
 	update_sprite_texture()
-	
-	# NEW: Start with a brief cooldown to prevent immediate pickup
-	pickup_cooldown = 0.5
-
-func _process(delta):
-	# NEW: Update cooldown timer
-	if pickup_cooldown > 0:
-		pickup_cooldown -= delta
 
 func _physics_process(delta: float) -> void:
 	if is_moving_to_player and player != null:
@@ -80,10 +72,6 @@ func _physics_process(delta: float) -> void:
 				print("PlayerInventory singleton not found!")
 
 func _on_area_entered(area):
-	# NEW: Check if pickup cooldown is active
-	if pickup_cooldown > 0:
-		return
-		
 	print("ItemDrop: Area entered - ", area.name)
 	if area.name == "PickupZone":
 		print("Player pickup zone detected - starting pickup")
