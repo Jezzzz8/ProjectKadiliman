@@ -259,7 +259,6 @@ func _on_change_hair_pressed() -> void:
 	
 	# NEW: Temporarily show black color when changing hair style using autoload
 	var temp_hair_color = PlayerCharacterData.get_current_hair_color()  # Store current color
-	PlayerCharacterData.set_hair_color("Black")  # Temporarily set to black
 	update_hair_with_color()
 	PlayerCharacterData.set_hair_color(temp_hair_color)  # Restore original color
 	
