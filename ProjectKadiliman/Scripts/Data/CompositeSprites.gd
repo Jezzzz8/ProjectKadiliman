@@ -134,6 +134,7 @@ var male_hair_spritesheet = {
 }
 
 var male_pants_spritesheet = {
+	"none": null,
 	"Black Pants": preload("res://Assets/Characters/Player/CompositeSpriteMale/Pants/1_universal.png"),
 	"Blue Pants": preload("res://Assets/Characters/Player/CompositeSpriteMale/Pants/2_universal.png"),
 	"Brown Pants": preload("res://Assets/Characters/Player/CompositeSpriteMale/Pants/3_universal.png"),
@@ -145,6 +146,7 @@ var male_pants_spritesheet = {
 }
 
 var male_shirts_spritesheet = {
+	"none": null,
 	"Black Shirt": preload("res://Assets/Characters/Player/CompositeSpriteMale/Shirts/1_universal.png"),
 	"Blue Shirt": preload("res://Assets/Characters/Player/CompositeSpriteMale/Shirts/2_universal.png"),
 	"Brown Shirt": preload("res://Assets/Characters/Player/CompositeSpriteMale/Shirts/3_universal.png"),
@@ -156,6 +158,7 @@ var male_shirts_spritesheet = {
 }
 
 var male_shoes_spritesheet = {
+	"none": null,
 	"Black Shoes": preload("res://Assets/Characters/Player/CompositeSpriteMale/Shoes/1_universal.png"),
 	"Blue Shoes": preload("res://Assets/Characters/Player/CompositeSpriteMale/Shoes/2_universal.png"),
 	"Brown Shoes": preload("res://Assets/Characters/Player/CompositeSpriteMale/Shoes/3_universal.png"),
@@ -259,6 +262,7 @@ var female_hair_spritesheet = {
 }
 
 var female_pants_spritesheet = {
+	"none": null,
 	"Black Pants": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Pants/1_universal.png"),
 	"Blue Pants": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Pants/2_universal.png"),
 	"Brown Pants": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Pants/3_universal.png"),
@@ -270,6 +274,7 @@ var female_pants_spritesheet = {
 }
 
 var female_shirts_spritesheet = {
+	"none": null,
 	"Black Shirt": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/1_universal.png"),
 	"Blue Shirt": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/2_universal.png"),
 	"Brown Shirt": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/3_universal.png"),
@@ -281,6 +286,7 @@ var female_shirts_spritesheet = {
 }
 
 var female_shoes_spritesheet = {
+	"none": null,
 	"Black Shoes": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shoes/1_universal.png"),
 	"Blue Shoes": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shoes/2_universal.png"),
 	"Brown Shoes": preload("res://Assets/Characters/Player/CompositeSpriteFemale/Shoes/3_universal.png"),

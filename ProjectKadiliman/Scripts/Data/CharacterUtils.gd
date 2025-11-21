@@ -1,12 +1,16 @@
 # CharacterUtils.gd - Shared character utility functions
 extends Node
 
+# In CharacterUtils.gd - Update update_sprites function:
+
 static func update_sprites(data: Dictionary, sprites: Dictionary) -> void:
 	if not PlayerCharacterData.validate_data(data):
 		push_error("Invalid character data")
 		return
 	
 	var is_female = data.is_female
+	
+	print("CharacterUtils: Updating sprites with data - Shirts:", data.shirts, " Pants:", data.pants, " Shoes:", data.shoes)
 	
 	for sprite_name in sprites:
 		var sprite = sprites[sprite_name]
@@ -22,17 +26,32 @@ static func update_sprites(data: Dictionary, sprites: Dictionary) -> void:
 					var pants_spritesheet = CompositeSprites.get_pants_spritesheet(is_female)
 					var pants_keys = pants_spritesheet.keys()
 					if data.pants < pants_keys.size():
-						sprite.texture = pants_spritesheet[pants_keys[data.pants]]
+						var texture = pants_spritesheet[pants_keys[data.pants]]
+						sprite.texture = texture
+						print("  Pants: ", pants_keys[data.pants])
+					else:
+						sprite.texture = null
+						print("  Pants: invalid index")
 				"shirts":
 					var shirts_spritesheet = CompositeSprites.get_shirts_spritesheet(is_female)
 					var shirts_keys = shirts_spritesheet.keys()
 					if data.shirts < shirts_keys.size():
-						sprite.texture = shirts_spritesheet[shirts_keys[data.shirts]]
+						var texture = shirts_spritesheet[shirts_keys[data.shirts]]
+						sprite.texture = texture
+						print("  Shirts: ", shirts_keys[data.shirts])
+					else:
+						sprite.texture = null
+						print("  Shirts: invalid index")
 				"shoes":
 					var shoes_spritesheet = CompositeSprites.get_shoes_spritesheet(is_female)
 					var shoes_keys = shoes_spritesheet.keys()
 					if data.shoes < shoes_keys.size():
-						sprite.texture = shoes_spritesheet[shoes_keys[data.shoes]]
+						var texture = shoes_spritesheet[shoes_keys[data.shoes]]
+						sprite.texture = texture
+						print("  Shoes: ", shoes_keys[data.shoes])
+					else:
+						sprite.texture = null
+						print("  Shoes: invalid index")
 				"main_hand":
 					sprite.texture = PlayerCharacterData.get_current_equipment_texture()
 

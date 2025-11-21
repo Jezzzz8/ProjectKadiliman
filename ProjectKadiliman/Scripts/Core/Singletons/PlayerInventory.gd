@@ -46,45 +46,178 @@ func initialize_equipment_from_customizer():
 	# Clear existing equips
 	equips.clear()
 	
+	print("Initializing equipment from customizer:")
+	print("  Shirts index: ", data.shirts)
+	print("  Pants index: ", data.pants)
+	print("  Shoes index: ", data.shoes)
+	
 	# Get clothing names based on indices from customizer
+	# Note: Index 0 now means "none" (no clothing equipped)
 	var shirt_name = get_shirt_name(data.shirts, is_female)
 	var pants_name = get_pants_name(data.pants, is_female) 
 	var shoes_name = get_shoes_name(data.shoes, is_female)
 	
-	# Set equipment slots 
+	print("  Shirt name: ", shirt_name)
+	print("  Pants name: ", pants_name)
+	print("  Shoes name: ", shoes_name)
+	
+	# Set equipment slots only if we have actual clothing (not "none")
 	# Slot 1: Shirt (BODY equipment slot)
 	# Slot 2: Pants (LEGS equipment slot) 
 	# Slot 3: Shoes (FOOT equipment slot)
-	equips[1] = [shirt_name, 1]  # BODY slot
-	equips[3] = [pants_name, 1]  # LEGS slot
-	equips[5] = [shoes_name, 1]  # FOOT slot
+	if shirt_name != "none" and shirt_name != "":
+		equips[1] = [shirt_name, 1]  # BODY slot
+	if pants_name != "none" and pants_name != "":
+		equips[3] = [pants_name, 1]  # LEGS slot
+	if shoes_name != "none" and shoes_name != "":
+		equips[5] = [shoes_name, 1]  # FOOT slot
 	
 	print("Equipment initialized from customizer:")
-	print("  Shirt: ", shirt_name, " (Slot 1 - BODY)")
-	print("  Pants: ", pants_name, " (Slot 3 - LEGS)")
-	print("  Shoes: ", shoes_name, " (Slot 5 - FOOT)")
+	print("  Equips: ", equips)
+	
+	# Sync to player character
+	sync_equipment_to_player()
+
+# In PlayerInventory.gd - Add these functions:
+
+# NEW: Sync equipment changes to player character
+func sync_equipment_to_player():
+	if not PlayerCharacterData:
+		print("PlayerCharacterData not found for equipment sync")
+		return
+	
+	print("Syncing equipment to player character...")
+	
+	# Clear current equipment
+	PlayerCharacterData.player_character_data.current_tool = "none"
+	PlayerCharacterData.player_character_data.current_weapon = "none" 
+	PlayerCharacterData.player_character_data.current_range_weapon = "none"
+	
+	# Reset clothing to "none" first
+	PlayerCharacterData.player_character_data.shirts = 0  # 0 = "none"
+	PlayerCharacterData.player_character_data.pants = 0   # 0 = "none" 
+	PlayerCharacterData.player_character_data.shoes = 0   # 0 = "none"
+	
+	# Update equipment based on what's equipped
+	for slot_index in equips:
+		var item_data = equips[slot_index]
+		var item_name = item_data[0]
+		
+		print("Processing equipped item: ", item_name, " in slot ", slot_index)
+		
+		if JsonData.item_data.has(item_name):
+			var item_category = JsonData.item_data[item_name]["ItemCategory"]
+			
+			match item_category:
+				"Tool":
+					PlayerCharacterData.player_character_data.current_tool = item_name
+					print("  -> Set as current tool: ", item_name)
+				"Weapon":
+					PlayerCharacterData.player_character_data.current_weapon = item_name
+					print("  -> Set as current weapon: ", item_name)
+				"Range Weapon":
+					PlayerCharacterData.player_character_data.current_range_weapon = item_name
+					print("  -> Set as current range weapon: ", item_name)
+				"Shirts", "Pants", "Shoes":
+					# Clothing is handled through the customizer data
+					update_clothing_from_equipment(item_name, item_category)
+		else:
+			print("  -> Item not found in JSON data: ", item_name)
+	
+	print("Equipment sync complete")
+	print("  Current tool: ", PlayerCharacterData.player_character_data.current_tool)
+	print("  Current weapon: ", PlayerCharacterData.player_character_data.current_weapon)
+	print("  Current range weapon: ", PlayerCharacterData.player_character_data.current_range_weapon)
+	print("  Shirt index: ", PlayerCharacterData.player_character_data.shirts)
+	print("  Pants index: ", PlayerCharacterData.player_character_data.pants)
+	print("  Shoes index: ", PlayerCharacterData.player_character_data.shoes)
+	
+	# Emit signal to update all character displays
+	inventory_updated.emit()
+
+# NEW: Update clothing when equipment changes
+func update_clothing_from_equipment(item_name: String, item_category: String):
+	var data = PlayerCharacterData.player_character_data
+	var is_female = data.is_female
+	
+	match item_category:
+		"Shirts":
+			# Find the index for this shirt
+			var spritesheet = CompositeSprites.get_shirts_spritesheet(is_female)
+			var keys = spritesheet.keys()
+			var shirt_index = keys.find(item_name)
+			if shirt_index != -1:
+				data.shirts = shirt_index
+				print("Updated shirt to: ", item_name, " (index: ", shirt_index, ")")
+		
+		"Pants":
+			# Find the index for these pants
+			var spritesheet = CompositeSprites.get_pants_spritesheet(is_female)
+			var keys = spritesheet.keys()
+			var pants_index = keys.find(item_name)
+			if pants_index != -1:
+				data.pants = pants_index
+				print("Updated pants to: ", item_name, " (index: ", pants_index, ")")
+		
+		"Shoes":
+			# Find the index for these shoes
+			var spritesheet = CompositeSprites.get_shoes_spritesheet(is_female)
+			var keys = spritesheet.keys()
+			var shoes_index = keys.find(item_name)
+			if shoes_index != -1:
+				data.shoes = shoes_index
+				print("Updated shoes to: ", item_name, " (index: ", shoes_index, ")")
+
+# NEW: Handle unequipping clothing
+func unequip_clothing(slot_index: int):
+	if equips.has(slot_index):
+		var item_name = equips[slot_index][0]
+		var item_category = JsonData.item_data[item_name]["ItemCategory"] if JsonData.item_data.has(item_name) else ""
+		
+		# Remove from equipment
+		equips.erase(slot_index)
+		
+		# Update player character data to show "none"
+		var data = PlayerCharacterData.player_character_data
+		
+		match item_category:
+			"Shirts":
+				data.shirts = 0  # This will correspond to "none" since we added it as first entry
+			"Pants":
+				data.pants = 0   # This will correspond to "none"
+			"Shoes":
+				data.shoes = 0   # This will correspond to "none"
+		
+		print("Unequipped: ", item_name)
+		sync_equipment_to_player()
+		return true
+	
+	return false
 
 # NEW: Helper functions to get clothing names from customizer indices
 func get_shirt_name(shirt_index: int, is_female: bool) -> String:
 	var spritesheet = CompositeSprites.get_shirts_spritesheet(is_female)
 	var keys = spritesheet.keys()
+	
 	if shirt_index < keys.size():
 		return keys[shirt_index]
-	return "Black Shirt"  # Default fallback
+	return "none"
 
 func get_pants_name(pants_index: int, is_female: bool) -> String:
 	var spritesheet = CompositeSprites.get_pants_spritesheet(is_female)
 	var keys = spritesheet.keys()
+	
 	if pants_index < keys.size():
 		return keys[pants_index]
-	return "Black Pants"  # Default fallback
+	return "none"
 
 func get_shoes_name(shoes_index: int, is_female: bool) -> String:
 	var spritesheet = CompositeSprites.get_shoes_spritesheet(is_female)
 	var keys = spritesheet.keys()
+	
 	if shoes_index < keys.size():
 		return keys[shoes_index]
-	return "Black Shoes"  # Default fallback
+	return "none"
 
 # NEW: Update equipment when character data changes (for real-time updates)
 func update_equipment_from_customizer():

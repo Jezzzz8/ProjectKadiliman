@@ -60,7 +60,6 @@ texture = ExtResource("2_n5btx")
 stretch_mode = 2
 
 [node name="PlayerCustomizer" parent="TextureRect" instance=ExtResource("5_r8ojd")]
-visible = false
 layout_mode = 1
 offset_left = 8.0
 offset_top = 28.0

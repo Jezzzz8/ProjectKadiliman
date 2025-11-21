@@ -47,6 +47,7 @@ func _ready() -> void:
 	if PlayerInventory:
 		PlayerInventory.active_item_updated.connect(_on_active_item_updated)
 		PlayerInventory.hotbar_updated.connect(_on_hotbar_updated)
+		PlayerInventory.inventory_updated.connect(_on_inventory_updated)  # NEW: Connect to general inventory updates
 	
 	update_equipment_display()
 
@@ -602,3 +603,8 @@ func handle_animations() -> void:
 		is_using_item
 	)
 	CharacterUtils.play_animation(anim, anim_name)
+
+func _on_inventory_updated():
+	print("Inventory updated - refreshing character appearance")
+	apply_character_data(PlayerCharacterData.player_character_data)
+	update_equipment_display()

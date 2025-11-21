@@ -483,7 +483,7 @@ func change_state_randomly():
 			print(animal_name + " randomly changed to wander")
 		
 		"eat":
-			if hunger < 25:  # Only eat if actually hungry
+			if hunger < 25 or randf() < 0.3:  # Only eat if actually hungry
 				state_machine.transition_to("eat")
 				wander_timer = randf_range(5.0, 10.0)
 				print(animal_name + " randomly changed to eat (hungry)")

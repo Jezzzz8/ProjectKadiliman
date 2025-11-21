@@ -107,6 +107,9 @@ func initialize_equips():
 			if equip_slots[i].item:
 				equip_slots[i].item.queue_free()
 				equip_slots[i].item = null
+	
+	# NEW: Sync equipment to player after initializing
+	PlayerInventory.sync_equipment_to_player()
 
 func initialize_inventory():
 	# Initialize inventory slots
@@ -426,11 +429,15 @@ func move_selected_item_to_slot(target_slot: SlotClass):
 	if target_slot.slot_type == SlotClass.SlotType.TRASH:
 		selected_item_description.text = "Moving item to trash..."
 		handle_trash_disposal(source_slot, target_slot, source_item_data)
+		# NEW: Sync equipment after trash disposal
+		PlayerInventory.sync_equipment_to_player()
 		return
 	
 	if source_slot.slot_type == SlotClass.SlotType.TRASH:
 		selected_item_description.text = "Retrieving item from trash..."
 		handle_trash_retrieval(source_slot, target_slot, source_item_data)
+		# NEW: Sync equipment after trash retrieval
+		PlayerInventory.sync_equipment_to_player()
 		return
 	
 	clear_selection()
@@ -446,6 +453,9 @@ func move_selected_item_to_slot(target_slot: SlotClass):
 		else:
 			selected_item_description.text = "Swapping items..."
 			swap_items(source_slot, target_slot, source_item_data)
+	
+	# NEW: Sync equipment changes to player
+	PlayerInventory.sync_equipment_to_player()
 
 # FIXED: Improved trash retrieval to handle swaps properly
 func handle_trash_retrieval(trash_slot: SlotClass, target_slot: SlotClass, source_item_data):
