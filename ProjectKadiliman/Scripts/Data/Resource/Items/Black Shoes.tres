@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://cbstkvci7336q"]
+
+[ext_resource type="Texture2D" uid="uid://c8k8a8tbudc3e" path="res://Assets/Characters/Player/CompositeSpriteMale/Shoes/1_universal.png" id="1_wlbyw"]
+[ext_resource type="Texture2D" uid="uid://y6jdtiktn2a3" path="res://Assets/Environment/Items/Black Shoes.png" id="2_ayox7"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_q1bv4"]
+
+[resource]
+script = ExtResource("3_q1bv4")
+item_id = "Black Shoes"
+item_category = "Shoes"
+stack_size = 1
+display_name = "Black Shoes"
+description = "Comfortable black shoes suitable for any occasion."
+rarity = "Common"
+value = 15
+use_effect = "Equip"
+item_texture = ExtResource("2_ayox7")
+animation_texture = ExtResource("1_wlbyw")
+equip_type = "pants"
+color = "Black"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

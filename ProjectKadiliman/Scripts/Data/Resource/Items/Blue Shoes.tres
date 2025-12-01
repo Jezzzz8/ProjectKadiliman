@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://581dq2v1pjly"]
+
+[ext_resource type="Texture2D" uid="uid://todloj2qkvyf" path="res://Assets/Characters/Player/CompositeSpriteMale/Shoes/2_universal.png" id="1_t2nll"]
+[ext_resource type="Texture2D" uid="uid://k57xqja5ws81" path="res://Assets/Environment/Items/Blue Shoes.png" id="2_lq651"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_xouqf"]
+
+[resource]
+script = ExtResource("3_xouqf")
+item_id = "Blue Shoes"
+item_category = "Shoes"
+stack_size = 1
+display_name = "Blue Shoes"
+description = "Stylish blue shoes perfect for walking and light activities."
+rarity = "Common"
+value = 15
+use_effect = "Equip"
+item_texture = ExtResource("2_lq651")
+animation_texture = ExtResource("1_t2nll")
+equip_type = "shoes"
+color = "Blue"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

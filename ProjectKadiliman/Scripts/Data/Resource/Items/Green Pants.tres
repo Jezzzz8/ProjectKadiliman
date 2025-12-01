@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://cggk6hh22o2pj"]
+
+[ext_resource type="Texture2D" uid="uid://cm104be2ghdwp" path="res://Assets/Characters/Player/CompositeSpriteMale/Pants/4_universal.png" id="1_nftmh"]
+[ext_resource type="Texture2D" uid="uid://c8wv3hk2jftir" path="res://Assets/Environment/Items/Green Pants.png" id="2_nwgfr"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_gnig7"]
+
+[resource]
+script = ExtResource("3_gnig7")
+item_id = "Green Pants"
+item_category = "Pants"
+stack_size = 1
+display_name = "Green Pants"
+description = "Vibrant green pants that blend well with forest surroundings."
+rarity = "Common"
+value = 12
+use_effect = "Equip"
+item_texture = ExtResource("2_nwgfr")
+animation_texture = ExtResource("1_nftmh")
+equip_type = "pants"
+color = "Green"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = ""
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

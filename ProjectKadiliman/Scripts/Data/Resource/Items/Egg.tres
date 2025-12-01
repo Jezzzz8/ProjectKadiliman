@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://cj6xkd5763bfr"]
+
+[ext_resource type="Texture2D" uid="uid://br7u1ki04fd7d" path="res://Assets/Environment/Items/Egg.png" id="1_1wuem"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="2_5dtvl"]
+
+[resource]
+script = ExtResource("2_5dtvl")
+item_id = "Egg"
+item_category = "Resource"
+stack_size = 99
+display_name = "Egg"
+description = "A fresh chicken egg. Perfect for cooking or eating raw if you're brave enough."
+rarity = "Common"
+value = 15
+use_effect = "Consume"
+item_texture = ExtResource("1_1wuem")
+equip_type = ""
+color = ""
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 0
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = ""
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

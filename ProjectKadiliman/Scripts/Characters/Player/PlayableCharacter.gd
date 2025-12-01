@@ -8,6 +8,10 @@ extends CharacterBody2D
 @onready var main_hand: Sprite2D = $Sprites/MainHand
 @onready var anim: AnimationPlayer = $PlayerAnimation
 
+@onready var interact_area: Area2D = $Sprites/InteractArea
+@onready var interact_collision_shape: CollisionShape2D = $Sprites/InteractArea/InteractCollisionShape
+@onready var interact_point: Marker2D = $Sprites/InteractArea/InteractCollisionShape/InteractPoint
+
 @onready var picked_item_container: VBoxContainer = $PickedItemLabel/VBoxContainer
 @onready var PickupZone: Area2D = $PickupZone
 @onready var trash_slot: PanelContainer = $UserInterface/Inventory/TrashSlot
@@ -49,9 +53,33 @@ func _ready() -> void:
 		PlayerInventory.hotbar_updated.connect(_on_hotbar_updated)
 		PlayerInventory.inventory_updated.connect(_on_inventory_updated)  # NEW: Connect to general inventory updates
 	
+	# Initialize interact collision shape as disabled
+	interact_collision_shape.disabled = true
+	update_interact_collision_position()
+	
 	update_equipment_display()
 
-# NEW: Function to announce inventory full
+# NEW: Update interact collision shape position based on current direction
+func update_interact_collision_position():
+	match last_direction:
+		"down":
+			interact_collision_shape.position = Vector2(0.0, 24.0)
+		"up":
+			interact_collision_shape.position = Vector2(0.0, -24.0)
+		"left":
+			interact_collision_shape.position = Vector2(-24.0, 0.0)
+		"right":
+			interact_collision_shape.position = Vector2(24.0, 0.0)
+
+# NEW: Enable interact collision shape during tool animation
+func enable_interact_collision():
+	interact_collision_shape.disabled = false
+
+# NEW: Disable interact collision shape after tool animation
+func disable_interact_collision():
+	interact_collision_shape.disabled = true
+
+# NEW: Inventory full announcement
 func announce_inventory_full():
 	print("Inventory is full! Cannot pick up item.")
 	
@@ -271,6 +299,10 @@ func _on_player_animation_animation_finished(anim_name: StringName) -> void:
 	if anim_name.begins_with("use_range_weapon_") or anim_name.begins_with("use_tool_") or anim_name.begins_with("use_weapon_"):
 		is_using_item = false
 		
+		# Disable interact collision shape after tool animation
+		if anim_name.begins_with("use_tool_"):
+			disable_interact_collision()
+		
 		# Handle specific animation types
 		if anim_name.begins_with("use_range_weapon_"):
 			spawn_projectile()
@@ -376,29 +408,31 @@ func use_active_item(item_name: String) -> void:
 		return
 	
 	# Get item category from JSON data
-	var item_category = JsonData.item_data[item_name]["ItemCategory"]
+	var item_resource = PlayerInventory.get_item_resource(item_name)
+	if item_resource:
+		var item_category = item_resource.item_category
 	
 	# Update direction based on mouse position for relevant items
-	if item_category != "Resource":  # Resources don't need direction update
-		update_direction_from_mouse()
+		if item_category != "Resource":  # Resources don't need direction update
+			update_direction_from_mouse()
 	
-	match item_category:
-		"Tool":
-			use_tool(item_name)  # Tool animation and action
-		"Weapon":
-			use_weapon(item_name)  # Weapon animation and action
-		"Range Weapon":
-			use_range_weapon(item_name)  # Range weapon animation and action
-		"Resource":
-			# Resources have no animation or action
-			print("Resource item used (no action): ", item_name)
-			return  # Don't trigger any animation
-		"Body":
-			print("Cannot use clothing directly: ", item_name)
-			return
-		_:
-			print("Unknown item category for: ", item_name)
-			return
+		match item_category:
+			"Tool":
+				use_tool(item_name)  # Tool animation and action
+			"Weapon":
+				use_weapon(item_name)  # Weapon animation and action
+			"Range Weapon":
+				use_range_weapon(item_name)  # Range weapon animation and action
+			"Resource":
+				# Resources have no animation or action
+				print("Resource item used (no action): ", item_name)
+				return  # Don't trigger any animation
+			"Body":
+				print("Cannot use clothing directly: ", item_name)
+				return
+			_:
+				print("Unknown item category for: ", item_name)
+				return
 
 func use_equipped_item() -> void:
 	if is_using_item:
@@ -450,6 +484,9 @@ func update_direction_from_mouse() -> void:
 		last_direction = "right" if direction_vector.x > 0 else "left"
 	else:
 		last_direction = "down" if direction_vector.y > 0 else "up"
+	
+	# Update interact collision position when direction changes
+	update_interact_collision_position()
 
 func use_tool(tool_name: String) -> void:
 	print("Using tool: ", tool_name)
@@ -457,6 +494,17 @@ func use_tool(tool_name: String) -> void:
 	var tool_anim_name = "use_tool_" + last_direction
 	if anim.has_animation(tool_anim_name):
 		is_using_item = true
+		
+		# Enable interact collision shape mid-animation
+		# We'll use a timer to enable it at the appropriate moment
+		var enable_timer = Timer.new()
+		enable_timer.wait_time = 0.2  # Adjust this time to match the mid-point of your animation
+		enable_timer.one_shot = true
+		add_child(enable_timer)
+		enable_timer.timeout.connect(enable_interact_collision)
+		enable_timer.timeout.connect(enable_timer.queue_free)
+		enable_timer.start()
+		
 		CharacterUtils.play_animation(anim, tool_anim_name)
 	else:
 		print("No animation found for: ", tool_anim_name)
@@ -592,6 +640,8 @@ func handle_movement() -> void:
 	if is_moving:
 		last_direction = CharacterUtils.update_direction(input_vector)
 		velocity = input_vector.normalized() * current_speed
+		# Update interact collision position when moving
+		update_interact_collision_position()
 	else:
 		velocity = Vector2.ZERO
 
@@ -608,3 +658,10 @@ func _on_inventory_updated():
 	print("Inventory updated - refreshing character appearance")
 	apply_character_data(PlayerCharacterData.player_character_data)
 	update_equipment_display()
+
+
+func _on_interact_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.
+
+func _on_interact_area_exited(area: Area2D) -> void:
+	pass # Replace with function body.

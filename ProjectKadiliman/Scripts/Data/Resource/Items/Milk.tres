@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://egien3nb58dg"]
+
+[ext_resource type="Texture2D" uid="uid://cbuxun3g2h5vm" path="res://Assets/Environment/Items/Milk.png" id="1_6ex4t"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="2_b2y0l"]
+
+[resource]
+script = ExtResource("2_b2y0l")
+item_id = "Milk"
+item_category = "Resource"
+stack_size = 8
+display_name = "Milk"
+description = "Fresh milk from a happy cow. Nutritious and perfect for drinking or cooking."
+rarity = "Common"
+value = 25
+use_effect = "Consume"
+item_texture = ExtResource("1_6ex4t")
+equip_type = ""
+color = ""
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 0
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = ""
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

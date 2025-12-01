@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://dew0x31thfqhe"]
+
+[ext_resource type="Texture2D" uid="uid://d2jgretkjfbnr" path="res://Assets/Characters/Player/CompositeSpriteMale/Pants/6_universal.png" id="1_ej6am"]
+[ext_resource type="Texture2D" uid="uid://kxk2tfx8iqja" path="res://Assets/Environment/Items/Purple Pants.png" id="2_kxnko"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_6bwio"]
+
+[resource]
+script = ExtResource("3_6bwio")
+item_id = "Purple Pants"
+item_category = "Pants"
+stack_size = 1
+display_name = "Purple Pants"
+description = "Elegant purple pants with a touch of royal flair."
+rarity = "Common"
+value = 12
+use_effect = "Equip"
+item_texture = ExtResource("2_kxnko")
+animation_texture = ExtResource("1_ej6am")
+equip_type = "pants"
+color = "Purple"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

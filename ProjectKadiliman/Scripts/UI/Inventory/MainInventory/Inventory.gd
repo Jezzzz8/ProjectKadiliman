@@ -379,19 +379,18 @@ func update_selected_item_display():
 		var item_name = selected_item.item_name
 		var item_quantity = selected_item.item_quantity
 		
-		# Check if item_name is valid before accessing JSON data
-		if item_name != "" and JsonData.item_data.has(item_name):
-			var item_data = JsonData.item_data[item_name]
+		# Check if item exists in resources
+		if item_name != "" and PlayerInventory.has_item_resource(item_name):
+			var item_resource = PlayerInventory.get_item_resource(item_name)
 			
 			if item_quantity > 1:
 				selected_item_name.text = "%s x%d" % [item_name, item_quantity]
 			else:
 				selected_item_name.text = item_name
 			
-			update_item_description(item_data)
-			update_item_stats(item_data, item_quantity)
+			update_item_description(item_resource)
+			update_item_stats(item_resource, item_quantity)
 		else:
-			# Handle empty or invalid items (like empty trash slot)
 			if item_name == "":
 				selected_item_name.text = "Empty Trash Slot"
 			else:
@@ -403,20 +402,18 @@ func update_selected_item_display():
 		selected_item_description.text = "Select an item to inspect its details"
 		selected_item_stats.text = ""
 
-func update_item_description(item_data: Dictionary):
-	var description_parts = []
-	if item_data.has("Description"):
-		description_parts.append(item_data["Description"])
-	selected_item_description.text = "\n".join(description_parts)
+func update_item_description(item_resource: ItemResource):
+	selected_item_description.text = item_resource.description
 
-func update_item_stats(item_data: Dictionary, quantity: int):
+func update_item_stats(item_resource: ItemResource, quantity: int):
 	var stats_parts = []
-	if item_data.has("ItemCategory"):
-		stats_parts.append("Category: " + item_data["ItemCategory"])
-	if item_data.has("Damage"):
-		stats_parts.append("Damage: %d" % item_data["Damage"])
-	if item_data.has("Defense"):
-		stats_parts.append("Defense: %d" % item_data["Defense"])
+	stats_parts.append("Category: " + item_resource.item_category)
+	if item_resource.damage > 0:
+		stats_parts.append("Damage: %d" % item_resource.damage)
+	if item_resource.defense > 0:
+		stats_parts.append("Defense: %d" % item_resource.defense)
+	stats_parts.append("Rarity: " + item_resource.rarity)
+	stats_parts.append("Value: %d" % item_resource.value)
 	selected_item_stats.text = "\n".join(stats_parts)
 
 func move_selected_item_to_slot(target_slot: SlotClass):
@@ -464,9 +461,11 @@ func handle_trash_retrieval(trash_slot: SlotClass, target_slot: SlotClass, sourc
 	
 	# Check if we can move the item to the target slot
 	var item_name = source_item_data.item_name
-	var item_category = JsonData.item_data[item_name]["ItemCategory"] if JsonData.item_data.has(item_name) else ""
-	
-	if not can_move_to_slot(trash_slot, target_slot, item_name, item_category):
+	var item_resource = PlayerInventory.get_item_resource(item_name)
+	if item_resource:
+		var item_category = item_resource.item_category
+
+	if not can_move_to_slot(trash_slot, target_slot, item_name, item_resource):
 		selected_item_description.text = "Cannot move trash item to this slot type"
 		clear_selection()
 		return
@@ -645,7 +644,7 @@ func swap_items(source_slot: SlotClass, target_slot: SlotClass, source_item_data
 	get_tree().call_group("hotbar", "refresh_hotbar")
 
 func stack_items(source_slot: SlotClass, target_slot: SlotClass, source_item_data):
-	var stack_size = int(JsonData.item_data[source_item_data.item_name]["StackSize"])
+	var stack_size = PlayerInventory.get_stack_size(source_item_data.item_name)
 	var able_to_add = stack_size - target_slot.item.item_quantity
 	
 	if able_to_add >= source_item_data.item_quantity:

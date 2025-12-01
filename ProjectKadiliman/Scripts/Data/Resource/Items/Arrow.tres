@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://b3uqabml7slqr"]
+
+[ext_resource type="Texture2D" uid="uid://dq6q131i8jrts" path="res://Assets/Environment/Items/Arrow.png" id="1_2kf11"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="2_gibve"]
+
+[resource]
+script = ExtResource("2_gibve")
+item_id = "Arrow"
+item_category = "Resource"
+stack_size = 99
+display_name = "Arrow"
+description = "Well-crafted arrows with sharp tips. Essential ammunition for the Cross Bow."
+rarity = "Uncommon"
+value = 3
+use_effect = "Ammo"
+item_texture = ExtResource("1_2kf11")
+equip_type = ""
+color = ""
+ammo_type = ""
+ammo_for = "Cross Bow"
+damage = 0
+defense = 0
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Workbench"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

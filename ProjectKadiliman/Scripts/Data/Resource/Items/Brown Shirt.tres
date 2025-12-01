@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://bugmtrxtqp5lh"]
+
+[ext_resource type="Texture2D" uid="uid://cuhqm7aok7mjm" path="res://Assets/Characters/Player/CompositeSpriteFemale/Shirts/3_universal.png" id="1_n73l5"]
+[ext_resource type="Texture2D" uid="uid://d18nyrk8ic2q3" path="res://Assets/Environment/Items/Brown Shirt.png" id="2_qjy5j"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_ijvk7"]
+
+[resource]
+script = ExtResource("3_ijvk7")
+item_id = "Brown Shirt"
+item_category = "Shirts"
+stack_size = 1
+display_name = "Brown Shirt"
+description = "An earthy brown shirt, perfect for blending in with nature."
+rarity = "Common"
+value = 8
+use_effect = "Equip"
+item_texture = ExtResource("2_qjy5j")
+animation_texture = ExtResource("1_n73l5")
+equip_type = "shirt"
+color = "Brown"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

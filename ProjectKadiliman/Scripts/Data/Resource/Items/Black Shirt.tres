@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://c71xwq3jl46aa"]
+
+[ext_resource type="Texture2D" uid="uid://b5x5d423272yu" path="res://Assets/Characters/Player/CompositeSpriteMale/Shirts/1_universal.png" id="1_5krxk"]
+[ext_resource type="Texture2D" uid="uid://lds4sj0e1l31" path="res://Assets/Environment/Items/Black Shirt.png" id="2_vw00k"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_wr2j6"]
+
+[resource]
+script = ExtResource("3_wr2j6")
+item_id = "Black Shirt"
+item_category = "Shirts"
+stack_size = 1
+display_name = "Black Shirt"
+description = "A simple black shirt. Stylish and versatile for any occasion."
+rarity = "Common"
+value = 8
+use_effect = "Equip"
+item_texture = ExtResource("2_vw00k")
+animation_texture = ExtResource("1_5krxk")
+equip_type = "shirt"
+color = "Black"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

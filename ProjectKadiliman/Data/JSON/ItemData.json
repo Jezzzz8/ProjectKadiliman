@@ -13,7 +13,7 @@
 		"StackSize": 1,
 		"DisplayName": "Slingshot",
 		"Description": "A simple but effective ranged weapon. Fires pebbles with surprising accuracy.",
-		"Rarity": "Common",
+		"Rarity": "Uncommon",
 		"Value": 15,
 		"UseEffect": "Shoot",
 		"AmmoType": "Peeble",

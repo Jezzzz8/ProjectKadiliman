@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://mlb4iatxjnws"]
+
+[ext_resource type="Texture2D" uid="uid://c0i3w8oaxxo0q" path="res://Assets/Characters/Player/CompositeSpriteMale/Shirts/4_universal.png" id="1_imyxa"]
+[ext_resource type="Texture2D" uid="uid://cbt335a6s6suh" path="res://Assets/Environment/Items/Green Shirt.png" id="2_hjd5f"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_q46lx"]
+
+[resource]
+script = ExtResource("3_q46lx")
+item_id = "Green Shirt"
+item_category = "Shirts"
+stack_size = 1
+display_name = "Green Shirt"
+description = "A vibrant green shirt that reminds you of fresh spring leaves."
+rarity = "Common"
+value = 8
+use_effect = "Equip"
+item_texture = ExtResource("2_hjd5f")
+animation_texture = ExtResource("1_imyxa")
+equip_type = "shirt"
+color = "Green"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

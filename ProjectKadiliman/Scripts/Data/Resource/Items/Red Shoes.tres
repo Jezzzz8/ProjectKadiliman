@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://ca1flmk7nm6cg"]
+
+[ext_resource type="Texture2D" uid="uid://chubn78gudvta" path="res://Assets/Characters/Player/CompositeSpriteMale/Shoes/7_universal.png" id="1_rowkl"]
+[ext_resource type="Texture2D" uid="uid://bmushdfl3ihkx" path="res://Assets/Environment/Items/Red Shoes.png" id="2_sy4xi"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_7s1js"]
+
+[resource]
+script = ExtResource("3_7s1js")
+item_id = "Red Shoes"
+item_category = "Shoes"
+stack_size = 1
+display_name = "Red Shoes"
+description = "Bold red shoes that add energy to any outfit."
+rarity = "Common"
+value = 15
+use_effect = "Equip"
+item_texture = ExtResource("2_sy4xi")
+animation_texture = ExtResource("1_rowkl")
+equip_type = "shoes"
+color = "Red"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

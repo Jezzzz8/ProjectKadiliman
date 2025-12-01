@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://cexffopu1lm8y"]
+
+[ext_resource type="Texture2D" uid="uid://csqh5lpqy2i4l" path="res://Assets/Environment/Items/Missing.png" id="1_tp0gp"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="2_25n3l"]
+
+[resource]
+script = ExtResource("2_25n3l")
+item_id = "Bracelet"
+item_category = "Accessory"
+stack_size = 1
+display_name = "Bracelet"
+description = "Cool Bracelet."
+rarity = "Common"
+value = 30
+use_effect = "Equip"
+item_texture = ExtResource("1_tp0gp")
+equip_type = "accessory"
+color = ""
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 5
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Forge"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

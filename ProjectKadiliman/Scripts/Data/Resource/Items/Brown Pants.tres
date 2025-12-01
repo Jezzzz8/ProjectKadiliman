@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://diibkiyfwhi5p"]
+
+[ext_resource type="Texture2D" uid="uid://cvyohg7fe2lo6" path="res://Assets/Characters/Player/CompositeSpriteMale/Pants/3_universal.png" id="1_vibga"]
+[ext_resource type="Texture2D" uid="uid://dnat2iiofncix" path="res://Assets/Environment/Items/Brown Pants.png" id="2_eqpfr"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_t147u"]
+
+[resource]
+script = ExtResource("3_t147u")
+item_id = "Brown Pants"
+item_category = "Pants"
+stack_size = 1
+display_name = "Brown Pants"
+description = "Durable brown pants ideal for outdoor activities and hard work."
+rarity = "Common"
+value = 12
+use_effect = "Equip"
+item_texture = ExtResource("2_eqpfr")
+animation_texture = ExtResource("1_vibga")
+equip_type = "pants"
+color = "Brown"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

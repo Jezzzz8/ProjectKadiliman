@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://dloho2dq4ywl7"]
+
+[ext_resource type="Texture2D" uid="uid://bohtyhj7v328w" path="res://Assets/Characters/Player/CompositeSpriteMale/Shirts/7_universal.png" id="1_oxe73"]
+[ext_resource type="Texture2D" uid="uid://0nam5ihdgqal" path="res://Assets/Environment/Items/Red Shirt.png" id="2_6423m"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_imvrw"]
+
+[resource]
+script = ExtResource("3_imvrw")
+item_id = "Red Shirt"
+item_category = "Shirts"
+stack_size = 1
+display_name = "Red Shirt"
+description = "A bold red shirt that shows confidence and passion."
+rarity = "Common"
+value = 8
+use_effect = "Equip"
+item_texture = ExtResource("2_6423m")
+animation_texture = ExtResource("1_oxe73")
+equip_type = "shirt"
+color = "Red"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

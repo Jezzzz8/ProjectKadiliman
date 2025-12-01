@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://dma0vpv0usjft"]
+
+[ext_resource type="Texture2D" uid="uid://d0d54er5hrkup" path="res://Assets/Environment/Items/Peeble.png" id="1_e6hia"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="1_rvpok"]
+
+[resource]
+script = ExtResource("1_rvpok")
+item_id = "Peeble"
+item_category = "Resource"
+stack_size = 99
+display_name = "Peeble"
+description = "Small, smooth stones perfect for slingshot ammunition. Found almost everywhere."
+rarity = "Common"
+value = 1
+use_effect = "Ammo"
+item_texture = ExtResource("1_e6hia")
+equip_type = ""
+color = ""
+ammo_type = ""
+ammo_for = "Slingshot"
+damage = 0
+defense = 0
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = ""
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

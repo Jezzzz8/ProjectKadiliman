@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://gsivl17qgr1r"]
+
+[ext_resource type="Texture2D" uid="uid://dg0wwt4o0ahq3" path="res://Assets/Characters/Player/MainHand/crossbow_universal.png" id="1_fvg7u"]
+[ext_resource type="Texture2D" uid="uid://hmpue2bw86jj" path="res://Assets/Environment/Items/Cross Bow.png" id="2_csj13"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="2_qhp3j"]
+
+[resource]
+script = ExtResource("2_qhp3j")
+item_id = "Cross Bow"
+item_category = "Range Weapon"
+stack_size = 1
+display_name = "Cross Bow"
+description = "A powerful ranged weapon that fires arrows with great force and precision."
+rarity = "Uncommon"
+value = 75
+use_effect = "Shoot"
+item_texture = ExtResource("2_csj13")
+animation_texture = ExtResource("1_fvg7u")
+equip_type = "range_weapon"
+color = ""
+ammo_type = "Arrow"
+ammo_for = ""
+damage = 15
+defense = 0
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Workbench"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

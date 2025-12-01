@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://ritso2o2odbx"]
+
+[ext_resource type="Texture2D" uid="uid://b4mthqcpho17v" path="res://Assets/Characters/Player/CompositeSpriteMale/Shirts/8_universal.png" id="1_64s5s"]
+[ext_resource type="Texture2D" uid="uid://6gof2jp0s40i" path="res://Assets/Environment/Items/Yellow Shirt.png" id="2_rklay"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_mp21t"]
+
+[resource]
+script = ExtResource("3_mp21t")
+item_id = "Yellow Shirt"
+item_category = "Shirts"
+stack_size = 1
+display_name = "Yellow Shirt"
+description = "A cheerful yellow shirt as bright as the morning sun."
+rarity = "Common"
+value = 8
+use_effect = "Equip"
+item_texture = ExtResource("2_rklay")
+animation_texture = ExtResource("1_64s5s")
+equip_type = "shirt"
+color = "Yellow"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

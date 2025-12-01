@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://bla33vq4x3vim"]
+
+[ext_resource type="Texture2D" uid="uid://bqt0sfr85t73h" path="res://Assets/Characters/Player/CompositeSpriteMale/Shirts/6_universal.png" id="1_2rl7p"]
+[ext_resource type="Texture2D" uid="uid://cr3v2d3gavnkh" path="res://Assets/Environment/Items/Purple Shirt.png" id="2_4ofqa"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_jm8a7"]
+
+[resource]
+script = ExtResource("3_jm8a7")
+item_id = "Purple Shirt"
+item_category = "Shirts"
+stack_size = 1
+display_name = "Purple Shirt"
+description = "A regal purple shirt fit for nobility or anyone with good taste."
+rarity = "Common"
+value = 8
+use_effect = "Consume"
+item_texture = ExtResource("2_4ofqa")
+animation_texture = ExtResource("1_2rl7p")
+equip_type = "shirt"
+color = "Purple"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

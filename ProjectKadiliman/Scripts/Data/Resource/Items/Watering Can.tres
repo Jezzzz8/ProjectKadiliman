@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://c37slaymcqa2m"]
+
+[ext_resource type="Texture2D" uid="uid://b3s7itblu3kv7" path="res://Assets/Characters/Player/MainHand/watering_can_universal.png" id="1_1ecva"]
+[ext_resource type="Texture2D" uid="uid://c84achj60oo5b" path="res://Assets/Environment/Items/Watering Can.png" id="2_r4kqm"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="2_rnjh5"]
+
+[resource]
+script = ExtResource("2_rnjh5")
+item_id = "Watering Can"
+item_category = "Tool"
+stack_size = 1
+display_name = "Watering Can"
+description = "A trusty watering can for hydrating plants. Keep your crops happy and healthy!"
+rarity = "Common"
+value = 10
+use_effect = "Water"
+item_texture = ExtResource("2_r4kqm")
+animation_texture = ExtResource("1_1ecva")
+equip_type = "tool"
+color = ""
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 0
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Forge"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

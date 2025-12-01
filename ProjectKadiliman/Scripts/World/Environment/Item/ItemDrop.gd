@@ -115,8 +115,9 @@ func set_item(nm, qt):
 		sprite.texture = preload("res://Assets/Environment/Items/Missing.png")
 	
 	# Handle quantity display
-	if JsonData and JsonData.item_data.has(item_name):
-		var stack_size = int(JsonData.item_data[item_name]["StackSize"])
+	if PlayerInventory and PlayerInventory.has_item_resource(item_name):
+		var resource = PlayerInventory.get_item_resource(item_name)
+		var stack_size = resource.stack_size
 		if stack_size == 1:
 			# Hide quantity label if it exists
 			var quantity_label = get_node_or_null("Quantity")
@@ -129,6 +130,7 @@ func set_item(nm, qt):
 				quantity_label.visible = true
 				quantity_label.text = str(item_quantity)
 	else:
+		var stack_size = 1
 		# Fallback for items not in JSON data or if JsonData not available
 		print("Warning: Item not found in JSON data or JsonData not available: ", item_name)
 		# Show quantity label if it exists

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://dx0inuq53ejc6"]
+
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="1_e6fv6"]
+[ext_resource type="Texture2D" uid="uid://sis1n0dcpqh1" path="res://Assets/Environment/Items/Shovel.png" id="2_18r56"]
+[ext_resource type="Texture2D" uid="uid://cuc6vqret468y" path="res://Assets/Characters/Player/MainHand/shovel_universal.png" id="2_102if"]
+
+[resource]
+script = ExtResource("1_e6fv6")
+item_id = "Shovel"
+item_category = "Tool"
+stack_size = 1
+display_name = "Shovel"
+description = "A sturdy shovel for digging soil and moving earth. Essential for any serious gardener or treasure hunter."
+rarity = "Common"
+value = 25
+use_effect = "Dig"
+item_texture = ExtResource("2_18r56")
+animation_texture = ExtResource("2_102if")
+equip_type = "tool"
+color = ""
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 0
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Forge"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

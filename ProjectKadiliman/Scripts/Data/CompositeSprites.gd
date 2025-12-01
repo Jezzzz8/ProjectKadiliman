@@ -404,3 +404,16 @@ func get_default_texture():
 		image.fill(Color(1, 0, 1))  # Magenta color for missing textures
 		var texture = ImageTexture.create_from_image(image)
 		return texture
+
+func get_item_texture_from_resource(item_name: String):
+	# Check PlayerInventory for item resource
+	if PlayerInventory and PlayerInventory.has_item_resource(item_name):
+		var resource = PlayerInventory.get_item_resource(item_name)
+		if resource and resource.item_texture:
+			return resource.item_texture
+	
+	# Fallback to file-based texture
+	return get_item_texture(item_name)
+
+func get_item_texture_via_resource(item_name: String):
+	return get_item_texture_from_resource(item_name)

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://b1rjixtbi26yo"]
+
+[ext_resource type="Texture2D" uid="uid://cxb1hm0gi6khf" path="res://Assets/Characters/Player/CompositeSpriteMale/Shirts/5_universal.png" id="1_2g5gm"]
+[ext_resource type="Texture2D" uid="uid://dnwe6nsncyf8d" path="res://Assets/Environment/Items/Orange Shirt.png" id="2_33cid"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_mfhwc"]
+
+[resource]
+script = ExtResource("3_mfhwc")
+item_id = "Orange Shirt"
+item_category = "Shirts"
+stack_size = 1
+display_name = "Orange Shirt"
+description = "A bright orange shirt that stands out in any crowd."
+rarity = "Common"
+value = 8
+use_effect = "Equip"
+item_texture = ExtResource("2_33cid")
+animation_texture = ExtResource("1_2g5gm")
+equip_type = "shirt"
+color = "Orange"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

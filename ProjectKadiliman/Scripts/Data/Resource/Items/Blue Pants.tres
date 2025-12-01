@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://ceqywswadhf04"]
+
+[ext_resource type="Texture2D" uid="uid://dx6icj2pjfjiv" path="res://Assets/Characters/Player/CompositeSpriteMale/Pants/2_universal.png" id="1_xqrqb"]
+[ext_resource type="Texture2D" uid="uid://drgkxlc700rd2" path="res://Assets/Environment/Items/Blue Pants.png" id="2_d7glh"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_pbhfu"]
+
+[resource]
+script = ExtResource("3_pbhfu")
+item_id = "Blue Pants"
+item_category = "Pants"
+stack_size = 1
+display_name = "Blue Pants"
+description = "Comfortable blue pants perfect for everyday adventures."
+rarity = "Common"
+value = 12
+use_effect = "Equip"
+item_texture = ExtResource("2_d7glh")
+animation_texture = ExtResource("1_xqrqb")
+equip_type = "pants"
+color = "Blue"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://bqxe53mqx3hni"]
+
+[ext_resource type="Texture2D" uid="uid://e6yxdudryit3" path="res://Assets/Characters/Player/CompositeSpriteMale/Pants/5_universal.png" id="1_wsinf"]
+[ext_resource type="Texture2D" uid="uid://dqiqri7m8aua" path="res://Assets/Environment/Items/Orange Pants.png" id="2_tebxn"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_e22eq"]
+
+[resource]
+script = ExtResource("3_e22eq")
+item_id = "Orange Pants"
+item_category = "Pants"
+stack_size = 1
+display_name = "Orange Pants"
+description = "Bright orange pants for those who like to stand out from the crowd."
+rarity = "Common"
+value = 12
+use_effect = "Equip"
+item_texture = ExtResource("2_tebxn")
+animation_texture = ExtResource("1_wsinf")
+equip_type = "pants"
+color = "Orange"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

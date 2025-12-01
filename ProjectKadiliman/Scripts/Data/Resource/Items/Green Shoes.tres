@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://cproxpxcv5won"]
+
+[ext_resource type="Texture2D" uid="uid://b56qxrydqs65" path="res://Assets/Characters/Player/CompositeSpriteMale/Shoes/4_universal.png" id="1_n8pcr"]
+[ext_resource type="Texture2D" uid="uid://dv16k2j1ljprp" path="res://Assets/Environment/Items/Green Shoes.png" id="2_avqj0"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_0ojsq"]
+
+[resource]
+script = ExtResource("3_0ojsq")
+item_id = "Green Shoes"
+item_category = "Shoes"
+stack_size = 1
+display_name = "Green Shoes"
+description = "Vibrant green shoes that match well with nature."
+rarity = "Common"
+value = 15
+use_effect = "Consume"
+item_texture = ExtResource("2_avqj0")
+animation_texture = ExtResource("1_n8pcr")
+equip_type = "shoes"
+color = "Green"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"

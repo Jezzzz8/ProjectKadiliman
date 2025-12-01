@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://cynh7xrj3shvp"]
+
+[ext_resource type="Texture2D" uid="uid://bqr2xas0pgju" path="res://Assets/Characters/Player/CompositeSpriteMale/Pants/8_universal.png" id="1_w0t2b"]
+[ext_resource type="Texture2D" uid="uid://dbef7u5hlnqj8" path="res://Assets/Environment/Items/Yellow Pants.png" id="2_hldhn"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="3_dkrdc"]
+
+[resource]
+script = ExtResource("3_dkrdc")
+item_id = "Yellow Pants"
+item_category = "Pants"
+stack_size = 1
+display_name = "Yellow Pants"
+description = "Cheerful yellow pants as bright as a sunny day."
+rarity = "Common"
+value = 12
+use_effect = "Equip"
+item_texture = ExtResource("2_hldhn")
+animation_texture = ExtResource("1_w0t2b")
+equip_type = "pants"
+color = "Yellow"
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Loom"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"
