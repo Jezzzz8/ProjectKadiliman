@@ -194,7 +194,7 @@ func handle_right_click(clicked_slot: SlotClass):
 			selected_item_description.text = "Items are not the same type"
 			return
 		
-		var stack_size = int(JsonData.item_data[selected_item.item_name]["StackSize"])
+		var stack_size = int(PlayerInventory.get_stack_size(selected_item.item_name))
 		if clicked_slot.item.item_quantity >= stack_size:
 			selected_item_description.text = "Target stack is already full"
 			return
@@ -247,10 +247,10 @@ func can_swap_items(source_slot: SlotClass, target_slot: SlotClass) -> bool:
 		return false
 	
 	var source_item_name = selected_item.item_name
-	var source_item_category = JsonData.item_data[source_item_name]["ItemCategory"]
+	var source_item_category = PlayerInventory.get_item_category(source_item_name)
 	
 	var target_item_name = target_slot.item.item_name if target_slot.item else ""
-	var target_item_category = JsonData.item_data[target_item_name]["ItemCategory"] if target_slot.item else ""
+	var target_item_category = PlayerInventory.get_item_category(target_item_name) if target_slot.item else ""
 	
 	selected_item_stats.text = "Swap: %s (%s) -> %s (%s)" % [
 		source_item_name, source_slot.slot_type,

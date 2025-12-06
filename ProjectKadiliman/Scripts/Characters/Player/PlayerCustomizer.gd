@@ -163,7 +163,7 @@ func update_main_hand_texture(item_name: String):
 		return
 	
 	var texture = null
-	var item_category = JsonData.item_data[item_name]["ItemCategory"]
+	var item_category = PlayerInventory.get_item_category(item_name)
 	
 	# Get the appropriate sprite based on item category
 	match item_category:

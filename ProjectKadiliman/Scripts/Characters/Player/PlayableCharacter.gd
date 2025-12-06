@@ -362,7 +362,7 @@ func update_main_hand_texture(item_name: String):
 		return
 	
 	var texture = null
-	var item_category = JsonData.item_data[item_name]["ItemCategory"]
+	var item_category = PlayerInventory.get_item_category(item_name)
 	
 	# Get the appropriate sprite based on item category
 	match item_category:
@@ -407,13 +407,13 @@ func use_active_item(item_name: String) -> void:
 	if item_name.is_empty():
 		return
 	
-	# Get item category from JSON data
+	# Get item category from Resource data
 	var item_resource = PlayerInventory.get_item_resource(item_name)
 	if item_resource:
 		var item_category = item_resource.item_category
 	
 	# Update direction based on mouse position for relevant items
-		if item_category != "Resource":  # Resources don't need direction update
+		if item_category != "Resource" or item_name == null:  # Resources don't need direction update
 			update_direction_from_mouse()
 	
 		match item_category:
@@ -440,11 +440,9 @@ func use_equipped_item() -> void:
 	
 	var data = PlayerCharacterData.player_character_data
 	
-	# Update direction based on mouse position
-	update_direction_from_mouse()
-	
 	# Check ammo for range weapons first using new inventory functions
 	if data.current_range_weapon != "none":
+		update_direction_from_mouse()
 		var ammo_type = get_ammo_type_for_weapon(data.current_range_weapon)
 		if ammo_type and not PlayerInventory.has_item(ammo_type):
 			print("No %s ammo available for %s!" % [ammo_type, data.current_range_weapon])
@@ -455,11 +453,13 @@ func use_equipped_item() -> void:
 	
 	# Then check for tools
 	if data.current_tool != "none":
+		update_direction_from_mouse()
 		use_tool(data.current_tool)
 		return
 	
 	# Finally check for weapons
 	if data.current_weapon != "none":
+		update_direction_from_mouse()
 		use_weapon(data.current_weapon)
 		return
 	
@@ -489,6 +489,7 @@ func update_direction_from_mouse() -> void:
 	update_interact_collision_position()
 
 func use_tool(tool_name: String) -> void:
+	
 	print("Using tool: ", tool_name)
 	
 	var tool_anim_name = "use_tool_" + last_direction

@@ -64,8 +64,8 @@ func get_valid_drop_items() -> Array:
 	var test_items = ["Arrow"]  # Only use items you know exist
 	
 	for item_name in test_items:
-		# Check if item exists in JSON data
-		if JsonData.item_data.has(item_name):
+		# Check if item exists in Resource data
+		if PlayerInventory.has_item(item_name):
 			possible_drops.append(item_name)
 		else:
 			print("Drop item not available: ", item_name)

@@ -45,7 +45,7 @@ item_name = "Milk"
 
 [node name="ItemDrop2" parent="." instance=ExtResource("3_26gyp")]
 position = Vector2(552.843, 429.35)
-item_name = "Arrow"
+item_name = "Necklace"
 
 [node name="ItemDrop4" parent="." instance=ExtResource("3_26gyp")]
 position = Vector2(730.507, 356.143)

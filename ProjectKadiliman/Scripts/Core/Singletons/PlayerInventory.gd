@@ -46,7 +46,8 @@ func add_test_items():
 		["Brown Shoes", 1],
 		["Egg", 5],
 		["Milk", 2],
-		["Bracelet", 1]
+		["Bracelet", 1],
+		["Necklace", 1],
 	]
 	
 	var added_count = 0
@@ -70,15 +71,7 @@ func add_test_items():
 	# Add some items to hotbar directly for testing
 	if hotbar.is_empty():
 		# Put some useful tools in hotbar slots
-		var hotbar_items = [
-			[0, "Shovel", 1],
-			[1, "Hoe", 1],
-			[2, "Watering Can", 1],
-			[3, "Cross Bow", 1],
-			[4, "Slingshot", 1],
-			[5, "Peeble", 15],
-			[6, "Arrow", 5]
-		]
+		var hotbar_items = []
 		
 		for hotbar_item in hotbar_items:
 			var slot_index = hotbar_item[0]

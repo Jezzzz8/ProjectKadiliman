@@ -127,7 +127,7 @@ func handle_auto_interaction():
 func create_interaction_indicator():
 	# Create a simple indicator (you can replace this with your own UI)
 	interaction_indicator = Label.new()
-	interaction_indicator.text = "[E] " + indicator_text  # Assuming 'E' is your interact key
+	interaction_indicator.text = "[F] " + indicator_text  # Assuming 'F' is your interact key
 	interaction_indicator.label_settings = LabelSettings.new()
 	interaction_indicator.label_settings.font_color = indicator_color
 	interaction_indicator.label_settings.font_size = 16
@@ -279,7 +279,7 @@ func update_indicator_text():
 			_:
 				indicator_text = "Interact"
 		
-		interaction_indicator.text = "[E] " + indicator_text
+		interaction_indicator.text = "[F] " + indicator_text
 
 # Method to manually trigger interaction (useful for UI buttons)
 func trigger_interaction():

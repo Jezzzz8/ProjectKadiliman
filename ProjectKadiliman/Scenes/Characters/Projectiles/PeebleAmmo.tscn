@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d0d54er5hrkup" path="res://Assets/Environment/Items/Peeble.png" id="2_7ugf6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7vj04"]
-radius = 7.0
+radius = 5.0
 
 [node name="PeebleAmmo" type="Area2D"]
 collision_layer = 16
@@ -17,6 +17,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_7ugf6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_7vj04")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

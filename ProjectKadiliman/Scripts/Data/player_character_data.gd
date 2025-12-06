@@ -82,7 +82,7 @@ static func sync_equipment_from_inventory():
 	for slot_index in PlayerInventory.equips:
 		var item_data = PlayerInventory.equips[slot_index]
 		var item_name = item_data[0]
-		var item_category = JsonData.item_data[item_name]["ItemCategory"]
+		var item_category = PlayerInventory.get_item_category(item_name)
 		
 		match item_category:
 			"Tool":

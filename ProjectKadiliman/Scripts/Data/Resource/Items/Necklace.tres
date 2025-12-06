@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://ctobr38ed61yt"]
+
+[ext_resource type="Texture2D" uid="uid://csqh5lpqy2i4l" path="res://Assets/Environment/Items/Missing.png" id="1_00e83"]
+[ext_resource type="Script" uid="uid://bxbwvhyho2jhq" path="res://Scripts/Data/Resource/ItemResource.gd" id="2_l368e"]
+
+[resource]
+script = ExtResource("2_l368e")
+item_id = "Necklace"
+item_category = "Accessory"
+stack_size = 1
+display_name = "Necklace"
+description = "Cool Necklace..."
+rarity = "Common"
+value = 15
+use_effect = "Equip"
+item_texture = ExtResource("1_00e83")
+equip_type = "accessory"
+color = ""
+ammo_type = ""
+ammo_for = ""
+damage = 0
+defense = 1
+crafting_ingredients = {}
+crafting_time = 0.0
+crafted_at = "Forge"
+metadata/_custom_type_script = "uid://bxbwvhyho2jhq"
